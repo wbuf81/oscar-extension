@@ -405,6 +405,9 @@ function updateScorePreview() {
 
   // Render category breakdown
   renderCategoryBreakdown(breakdownEl, categoryStats, maxWeight);
+
+  // Update floating meter
+  updateFloatingMeter(totalWeight, maxWeight, enabledCount, percentage);
 }
 
 function animateNumber(element, target) {
@@ -525,7 +528,8 @@ function renderCategoryBreakdown(container, categoryStats, maxWeight) {
 }
 
 function createCategoryBarItem(key, icon, label, stats, maxWeight) {
-  const widthPercent = maxWeight > 0 ? Math.round((stats.weight / maxWeight) * 100) : 0;
+  // Use category completion percentage (enabled/total), not weight contribution
+  const completionPercent = stats.total > 0 ? Math.round((stats.enabled / stats.total) * 100) : 0;
   const isActive = stats.enabled > 0;
 
   const itemEl = document.createElement('div');
@@ -536,10 +540,10 @@ function createCategoryBarItem(key, icon, label, stats, maxWeight) {
     <div class="category-bar-header">
       <span class="category-bar-icon">${icon}</span>
       <span class="category-bar-name">${label}</span>
-      <span class="category-bar-weight">${stats.weight}</span>
+      <span class="category-bar-percent">${completionPercent}%</span>
     </div>
     <div class="category-mini-bar">
-      <div class="category-mini-fill" style="width: ${widthPercent}%"></div>
+      <div class="category-mini-fill" style="width: ${completionPercent}%"></div>
     </div>
   `;
 
@@ -894,3 +898,88 @@ async function resetToDefaults() {
     renderTrainingItems();
   }
 }
+
+// ========================================
+// Floating Mini Sniff-O-Meter
+// ========================================
+
+let floatingMeterVisible = false;
+let lastFloatingScore = 0;
+
+function initFloatingMeter() {
+  const floatingMeter = document.getElementById('floating-meter');
+  const scorePreviewSection = document.querySelector('.score-preview-section');
+  const scrollToMeterBtn = document.getElementById('scroll-to-meter');
+
+  if (!floatingMeter || !scorePreviewSection) return;
+
+  // Scroll to meter button
+  scrollToMeterBtn?.addEventListener('click', () => {
+    scorePreviewSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  // Check visibility on scroll
+  const observer = new IntersectionObserver((entries) => {
+    const isVisible = entries[0].isIntersecting;
+
+    if (!isVisible && !floatingMeterVisible) {
+      floatingMeter.classList.add('visible');
+      floatingMeterVisible = true;
+    } else if (isVisible && floatingMeterVisible) {
+      floatingMeter.classList.remove('visible');
+      floatingMeterVisible = false;
+    }
+  }, {
+    threshold: 0.1,
+    rootMargin: '-50px 0px 0px 0px'
+  });
+
+  observer.observe(scorePreviewSection);
+}
+
+function updateFloatingMeter(totalWeight, maxWeight, enabledCount, percentage) {
+  const floatingMeter = document.getElementById('floating-meter');
+  const floatingScore = document.getElementById('floating-score');
+  const floatingBar = document.getElementById('floating-bar');
+  const floatingEnabled = document.getElementById('floating-enabled');
+  const floatingOscar = document.getElementById('floating-oscar');
+
+  if (!floatingMeter) return;
+
+  // Update values
+  floatingScore.textContent = percentage;
+  floatingBar.style.width = percentage + '%';
+  floatingEnabled.textContent = enabledCount;
+
+  // Update Oscar's expression based on percentage
+  if (percentage < 25) {
+    floatingOscar.textContent = '😴';
+  } else if (percentage < 50) {
+    floatingOscar.textContent = '🐕';
+  } else if (percentage < 80) {
+    floatingOscar.textContent = '🐕‍🦺';
+  } else {
+    floatingOscar.textContent = '🦮';
+  }
+
+  // Trigger animations on score change
+  if (percentage !== lastFloatingScore) {
+    // Pulse the score
+    floatingMeter.classList.remove('pulse');
+    void floatingMeter.offsetWidth; // Force reflow
+    floatingMeter.classList.add('pulse');
+
+    // Wag Oscar
+    floatingOscar.classList.remove('happy');
+    void floatingOscar.offsetWidth;
+    floatingOscar.classList.add('happy');
+
+    lastFloatingScore = percentage;
+  }
+}
+
+// Initialize floating meter when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  // Small delay to ensure other elements are ready
+  setTimeout(initFloatingMeter, 100);
+});

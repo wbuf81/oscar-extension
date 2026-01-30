@@ -150,6 +150,29 @@
     <div id="save-indicator" class="save-indicator hidden">
       <span class="save-icon">✓</span> Settings saved
     </div>
+
+    <!-- Floating Mini Sniff-O-Meter -->
+    <div id="floating-meter" class="floating-meter">
+      <div class="floating-meter-header">
+        <span class="floating-oscar" id="floating-oscar">🐕</span>
+        <div class="floating-stats">
+          <div class="floating-score">
+            <span class="floating-score-value" id="floating-score">0</span>
+            <span class="floating-score-percent">%</span>
+          </div>
+          <div class="floating-label">Sniff Power</div>
+        </div>
+      </div>
+      <div class="floating-bar-container">
+        <div class="floating-bar-bg">
+          <div class="floating-bar-fill" id="floating-bar"></div>
+        </div>
+      </div>
+      <div class="floating-details">
+        <span class="floating-enabled"><span id="floating-enabled">0</span> checks</span>
+        <button class="floating-scroll-top" id="scroll-to-meter" title="Back to Sniff-O-Meter">↑</button>
+      </div>
+    </div>
   </div>
 
   <script src="options.js"></script>
