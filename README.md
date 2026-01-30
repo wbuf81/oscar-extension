@@ -116,6 +116,7 @@ OSCAR is designed with privacy as a core principle:
 | `tabs` | To list and compare multiple open tabs |
 | `storage` | To save your settings and scan history locally |
 | `scripting` | To inject the scanner into web pages |
+| `cookies` | To clear consent cookies for the "Force Cookie Banner" feature |
 | `<all_urls>` | To scan any website you visit |
 
 ## Project Structure
@@ -152,7 +153,7 @@ MIT License - see LICENSE file for details.
 
 ## Support
 
-If you encounter issues or have suggestions, please [open an issue](https://github.com/anthropics/oscar-extension/issues) on GitHub.
+If you encounter issues or have suggestions, please [open an issue](https://github.com/wbuf81/oscar-extension/issues) on GitHub.
 
 ---
 

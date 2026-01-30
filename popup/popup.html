@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OSCAR</title>
   <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="../utils/modal.css">
 </head>
 <body>
   <div class="container" id="main-view">
@@ -64,6 +65,10 @@
         <span class="btn-icon">🔍</span>
         <span class="btn-text">Scan This Page</span>
       </button>
+      <button id="force-cookie-banner" class="btn btn-secondary btn-cookie-banner">
+        <span class="btn-icon">🍪</span>
+        <span class="btn-text">Force Cookie Banner</span>
+      </button>
       <p class="scan-hint">Oscar will sniff out privacy policies, cookie banners, terms of service & more</p>
     </div>
 
@@ -99,8 +104,14 @@
       <button id="clear-results" class="btn btn-link hidden">Clear Results</button>
     </div>
 
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <p>© 2026 Compliance Pals</p>
+    </footer>
+
   </div>
 
+  <script src="../utils/modal.js"></script>
   <script src="popup.js" type="module"></script>
 </body>
 </html>

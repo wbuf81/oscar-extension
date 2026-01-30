@@ -3,6 +3,8 @@
 let historyData = [];
 let filteredData = [];
 let selectedScanId = null;
+let compareMode = false;
+let selectedForCompare = new Set();
 
 // DOM Elements
 const historyList = document.getElementById('history-list');
@@ -18,6 +20,17 @@ const detailModal = document.getElementById('detail-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalBody = document.getElementById('modal-body');
 const deleteScanBtn = document.getElementById('delete-scan');
+
+// Compare Mode Elements
+const toggleCompareModeBtn = document.getElementById('toggle-compare-mode');
+const compareInstructions = document.getElementById('compare-instructions');
+const exitCompareModeBtn = document.getElementById('exit-compare-mode');
+const compareBar = document.getElementById('compare-bar');
+const compareCountEl = document.getElementById('compare-count');
+const clearCompareBtn = document.getElementById('clear-compare-selection');
+const compareSelectedBtn = document.getElementById('compare-selected');
+const compareModal = document.getElementById('compare-modal');
+const compareModalBody = document.getElementById('compare-modal-body');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', init);
@@ -65,10 +78,41 @@ function setupEventListeners() {
 
   // Escape key to close modal
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && detailModal.classList.contains('visible')) {
-      closeModal();
+    if (e.key === 'Escape') {
+      if (compareModal && compareModal.classList.contains('visible')) {
+        closeCompareModal();
+      } else if (detailModal.classList.contains('visible')) {
+        closeModal();
+      }
     }
   });
+
+  // Compare mode event listeners
+  if (toggleCompareModeBtn) {
+    toggleCompareModeBtn.addEventListener('click', toggleCompareMode);
+  }
+  if (exitCompareModeBtn) {
+    exitCompareModeBtn.addEventListener('click', exitCompareMode);
+  }
+  if (clearCompareBtn) {
+    clearCompareBtn.addEventListener('click', clearCompareSelection);
+  }
+  if (compareSelectedBtn) {
+    compareSelectedBtn.addEventListener('click', showCompareModal);
+  }
+
+  // Compare modal close buttons
+  document.querySelectorAll('.compare-modal-close').forEach(btn => {
+    btn.addEventListener('click', closeCompareModal);
+  });
+
+  // Compare modal backdrop click
+  if (compareModal) {
+    const backdrop = compareModal.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.addEventListener('click', closeCompareModal);
+    }
+  }
 }
 
 // ========================================
@@ -154,8 +198,12 @@ function createHistoryItemElement(item) {
 
   const scoreClass = getScoreClass(item.score);
   const foundCount = countFoundItems(item.compliance);
+  const isSelected = selectedForCompare.has(item.id);
 
   div.innerHTML = `
+    <div class="history-item-checkbox ${compareMode ? '' : 'hidden'}">
+      <input type="checkbox" class="compare-checkbox" data-id="${item.id}" ${isSelected ? 'checked' : ''}>
+    </div>
     <div class="history-item-score ${scoreClass}">${item.score}%</div>
     <div class="history-item-info">
       <div class="history-item-url">${hostname}</div>
@@ -167,9 +215,56 @@ function createHistoryItemElement(item) {
     <div class="history-item-arrow">›</div>
   `;
 
-  div.addEventListener('click', () => openDetailModal(item));
+  // Add class if selected
+  if (isSelected) {
+    div.classList.add('selected-for-compare');
+  }
+
+  // Handle click based on compare mode
+  div.addEventListener('click', (e) => {
+    if (compareMode) {
+      // In compare mode, toggle checkbox
+      const checkbox = div.querySelector('.compare-checkbox');
+      if (e.target !== checkbox) {
+        checkbox.checked = !checkbox.checked;
+        handleCompareCheckboxChange(checkbox, item.id, div);
+      }
+    } else {
+      // Normal mode, open detail modal
+      openDetailModal(item);
+    }
+  });
+
+  // Handle checkbox change directly
+  const checkbox = div.querySelector('.compare-checkbox');
+  if (checkbox) {
+    checkbox.addEventListener('change', (e) => {
+      e.stopPropagation();
+      handleCompareCheckboxChange(checkbox, item.id, div);
+    });
+  }
 
   return div;
+}
+
+function handleCompareCheckboxChange(checkbox, itemId, div) {
+  if (checkbox.checked) {
+    if (selectedForCompare.size < 4) {
+      selectedForCompare.add(itemId);
+      div.classList.add('selected-for-compare');
+    } else {
+      checkbox.checked = false;
+      OscarModal.alert({
+        title: 'Selection Limit',
+        message: 'You can compare up to 4 scans at a time. Please deselect one first.',
+        type: 'warning'
+      });
+    }
+  } else {
+    selectedForCompare.delete(itemId);
+    div.classList.remove('selected-for-compare');
+  }
+  updateCompareBar();
 }
 
 function getScoreClass(score) {
@@ -333,7 +428,15 @@ function closeModal() {
 async function deleteSelectedScan() {
   if (!selectedScanId) return;
 
-  if (confirm('Delete this scan from history?')) {
+  const confirmed = await OscarModal.confirm({
+    title: 'Delete Scan',
+    message: 'Delete this scan from history?',
+    confirmText: 'Delete',
+    cancelText: 'Keep It',
+    type: 'danger'
+  });
+
+  if (confirmed) {
     try {
       historyData = historyData.filter(item => item.id !== selectedScanId);
       await chrome.storage.local.set({ history: historyData });
@@ -350,7 +453,15 @@ async function deleteSelectedScan() {
 }
 
 async function clearAllHistory() {
-  if (confirm('Clear all scan history?\n\nThis action cannot be undone.')) {
+  const confirmed = await OscarModal.confirm({
+    title: 'Clear All History',
+    message: 'Clear all scan history?\n\nThis action cannot be undone.',
+    confirmText: 'Clear All',
+    cancelText: 'Keep History',
+    type: 'danger'
+  });
+
+  if (confirmed) {
     try {
       historyData = [];
       filteredData = [];
@@ -362,4 +473,317 @@ async function clearAllHistory() {
       console.error('Failed to clear history:', error);
     }
   }
+}
+
+// ========================================
+// Compare Mode
+// ========================================
+
+function toggleCompareMode() {
+  compareMode = !compareMode;
+
+  if (compareMode) {
+    enterCompareMode();
+  } else {
+    exitCompareMode();
+  }
+}
+
+function enterCompareMode() {
+  compareMode = true;
+  document.body.classList.add('compare-mode-active');
+
+  // Update button
+  if (toggleCompareModeBtn) {
+    toggleCompareModeBtn.classList.add('active');
+    toggleCompareModeBtn.querySelector('.compare-text').textContent = 'Exit Compare';
+  }
+
+  // Show instructions
+  if (compareInstructions) {
+    compareInstructions.classList.remove('hidden');
+  }
+
+  // Show checkboxes
+  document.querySelectorAll('.history-item-checkbox').forEach(el => {
+    el.classList.remove('hidden');
+  });
+
+  // Show compare bar
+  if (compareBar) {
+    compareBar.classList.remove('hidden');
+  }
+
+  updateCompareBar();
+}
+
+function exitCompareMode() {
+  compareMode = false;
+  document.body.classList.remove('compare-mode-active');
+
+  // Update button
+  if (toggleCompareModeBtn) {
+    toggleCompareModeBtn.classList.remove('active');
+    toggleCompareModeBtn.querySelector('.compare-text').textContent = 'Compare Scans';
+  }
+
+  // Hide instructions
+  if (compareInstructions) {
+    compareInstructions.classList.add('hidden');
+  }
+
+  // Hide checkboxes
+  document.querySelectorAll('.history-item-checkbox').forEach(el => {
+    el.classList.add('hidden');
+  });
+
+  // Hide compare bar
+  if (compareBar) {
+    compareBar.classList.add('hidden');
+  }
+
+  // Clear selection
+  clearCompareSelection();
+}
+
+function clearCompareSelection() {
+  selectedForCompare.clear();
+
+  // Uncheck all checkboxes
+  document.querySelectorAll('.compare-checkbox').forEach(cb => {
+    cb.checked = false;
+  });
+
+  // Remove selection styling
+  document.querySelectorAll('.history-item.selected-for-compare').forEach(el => {
+    el.classList.remove('selected-for-compare');
+  });
+
+  updateCompareBar();
+}
+
+function updateCompareBar() {
+  const count = selectedForCompare.size;
+
+  if (compareCountEl) {
+    compareCountEl.textContent = count;
+  }
+
+  if (compareSelectedBtn) {
+    compareSelectedBtn.disabled = count < 2;
+    compareSelectedBtn.textContent = count < 2 ? 'Select at least 2' : `Compare ${count} Scans`;
+  }
+}
+
+// ========================================
+// Compare Modal
+// ========================================
+
+async function showCompareModal() {
+  if (selectedForCompare.size < 2) return;
+
+  // Get selected scan data
+  const selectedScans = historyData.filter(item => selectedForCompare.has(item.id));
+
+  // Load labels
+  let labels = await loadComplianceLabels();
+
+  // Render comparison
+  renderCompareModalContent(selectedScans, labels);
+
+  // Show modal
+  compareModal.classList.remove('hidden');
+  setTimeout(() => {
+    compareModal.classList.add('visible');
+  }, 10);
+}
+
+function closeCompareModal() {
+  compareModal.classList.remove('visible');
+  setTimeout(() => {
+    compareModal.classList.add('hidden');
+  }, 300);
+}
+
+async function loadComplianceLabels() {
+  let labels = {};
+
+  try {
+    const result = await chrome.storage.local.get('trainingSettings');
+    if (result.trainingSettings) {
+      for (const [key, setting] of Object.entries(result.trainingSettings.builtinItems)) {
+        labels[key] = setting.label;
+      }
+      for (const custom of result.trainingSettings.customItems) {
+        labels[custom.id] = custom.label;
+      }
+    }
+  } catch (e) {
+    console.error('Failed to load labels', e);
+  }
+
+  // Default labels
+  const defaultLabels = {
+    privacyPolicy: 'Privacy Policy',
+    cookieBanner: 'Cookie Banner',
+    doNotSell: 'Do Not Sell (CCPA)',
+    cookiePolicy: 'Cookie Policy',
+    cookieSettings: 'Cookie Settings',
+    termsOfService: 'Terms of Service',
+    legal: 'Legal Notice',
+    dispute: 'Dispute Resolution',
+    dmca: 'DMCA / Copyright',
+    reportAbuse: 'Report Abuse',
+    dataRequest: 'Data Subject Request',
+    contact: 'Contact Info',
+    refundPolicy: 'Refund Policy',
+    shippingPolicy: 'Shipping Policy',
+    ageVerification: 'Age Verification',
+    accessibility: 'Accessibility',
+    sitemap: 'Sitemap',
+    affiliateDisclosure: 'Affiliate Disclosure',
+    adChoices: 'Ad Choices',
+    modernSlavery: 'Modern Slavery',
+    sustainability: 'Sustainability',
+    securityPolicy: 'Security Policy',
+    whoisRdap: 'WHOIS/RDAP',
+    domainAbuse: 'Domain Abuse',
+    udrp: 'UDRP',
+    registrarInfo: 'Registrar Info',
+    transferPolicy: 'Transfer Policy'
+  };
+
+  return { ...defaultLabels, ...labels };
+}
+
+function renderCompareModalContent(scans, labels) {
+  // Oscar moods
+  const oscarMoods = {
+    poor: { face: '😰', label: 'Poor' },
+    fair: { face: '🐕', label: 'Fair' },
+    good: { face: '🐕‍🦺', label: 'Good' },
+    excellent: { face: '🦮', label: 'Excellent' }
+  };
+
+  // Calculate stats
+  const avgScore = Math.round(scans.reduce((sum, s) => sum + s.score, 0) / scans.length);
+  const bestScan = scans.reduce((best, s) => s.score > best.score ? s : best, scans[0]);
+  const worstScan = scans.reduce((worst, s) => s.score < worst.score ? s : worst, scans[0]);
+
+  // Get all compliance keys from all scans
+  const allKeys = new Set();
+  scans.forEach(scan => {
+    Object.keys(scan.compliance).forEach(key => allKeys.add(key));
+  });
+
+  // Build comparison table rows
+  const tableRows = Array.from(allKeys).map(key => {
+    const label = labels[key] || key;
+    const cells = scans.map(scan => {
+      const item = scan.compliance[key];
+      const found = typeof item === 'boolean' ? item : (item && item.found);
+      return `<td class="${found ? 'found' : 'not-found'}">${found ? '✓' : '✗'}</td>`;
+    }).join('');
+
+    // Count how many found this
+    const foundCount = scans.filter(scan => {
+      const item = scan.compliance[key];
+      return typeof item === 'boolean' ? item : (item && item.found);
+    }).length;
+
+    const rowClass = foundCount === scans.length ? 'all-found' : foundCount === 0 ? 'none-found' : 'some-found';
+
+    return `
+      <tr class="${rowClass}">
+        <td class="item-label">${label}</td>
+        ${cells}
+      </tr>
+    `;
+  }).join('');
+
+  // Build header columns
+  const headerCols = scans.map(scan => {
+    const hostname = new URL(scan.url).hostname;
+    const moodKey = scan.score >= 80 ? 'excellent' : scan.score >= 60 ? 'good' : scan.score >= 40 ? 'fair' : 'poor';
+    const mood = oscarMoods[moodKey];
+
+    return `
+      <th class="compare-site-header">
+        <div class="compare-site-oscar">${mood.face}</div>
+        <div class="compare-site-name" title="${scan.url}">${hostname}</div>
+        <div class="compare-site-score ${getScoreClass(scan.score)}">${scan.score}%</div>
+      </th>
+    `;
+  }).join('');
+
+  // Build site score bars
+  const scoreBars = scans.map(scan => {
+    const hostname = new URL(scan.url).hostname;
+    const moodKey = scan.score >= 80 ? 'excellent' : scan.score >= 60 ? 'good' : scan.score >= 40 ? 'fair' : 'poor';
+    const mood = oscarMoods[moodKey];
+
+    return `
+      <div class="compare-score-card">
+        <div class="compare-score-header">
+          <span class="compare-score-oscar">${mood.face}</span>
+          <span class="compare-score-site">${hostname}</span>
+        </div>
+        <div class="compare-score-gauge">
+          <div class="compare-score-fill ${getScoreClass(scan.score)}" style="width: ${scan.score}%"></div>
+        </div>
+        <div class="compare-score-value ${getScoreClass(scan.score)}">${scan.score}%</div>
+      </div>
+    `;
+  }).join('');
+
+  compareModalBody.innerHTML = `
+    <div class="compare-overview">
+      <div class="compare-overview-header">
+        <div class="compare-overview-oscar">
+          ${oscarMoods[avgScore >= 80 ? 'excellent' : avgScore >= 60 ? 'good' : avgScore >= 40 ? 'fair' : 'poor'].face}
+        </div>
+        <div class="compare-overview-info">
+          <div class="compare-overview-title">Comparing ${scans.length} Scans</div>
+          <div class="compare-overview-subtitle">Average score: <strong>${avgScore}%</strong></div>
+        </div>
+      </div>
+
+      <div class="compare-score-cards">
+        ${scoreBars}
+      </div>
+
+      <div class="compare-quick-stats">
+        <div class="compare-quick-stat best">
+          <span class="stat-emoji">🏆</span>
+          <span class="stat-label">Best:</span>
+          <span class="stat-value">${new URL(bestScan.url).hostname} (${bestScan.score}%)</span>
+        </div>
+        <div class="compare-quick-stat worst">
+          <span class="stat-emoji">📉</span>
+          <span class="stat-label">Lowest:</span>
+          <span class="stat-value">${new URL(worstScan.url).hostname} (${worstScan.score}%)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-table-container">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="item-label-header">Compliance Item</th>
+            ${headerCols}
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="compare-legend">
+      <div class="legend-item"><span class="legend-dot all"></span> All sites have this</div>
+      <div class="legend-item"><span class="legend-dot some"></span> Some sites have this</div>
+      <div class="legend-item"><span class="legend-dot none"></span> No sites have this</div>
+    </div>
+  `;
 }

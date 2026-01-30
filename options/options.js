@@ -406,8 +406,8 @@ function updateScorePreview() {
   // Render category breakdown
   renderCategoryBreakdown(breakdownEl, categoryStats, maxWeight);
 
-  // Update floating meter
-  updateFloatingMeter(totalWeight, maxWeight, enabledCount, percentage);
+  // Update floating meter with category stats
+  updateFloatingMeter(totalWeight, maxWeight, enabledCount, percentage, categoryStats);
 }
 
 function animateNumber(element, target) {
@@ -813,8 +813,16 @@ function createTrainingItemElement(key, item, isCustom) {
 
   if (isCustom) {
     const deleteBtn = div.querySelector('.training-item-delete');
-    deleteBtn.addEventListener('click', () => {
-      if (confirm(`Delete "${item.label}" custom search?`)) {
+    deleteBtn.addEventListener('click', async () => {
+      const confirmed = await OscarModal.confirm({
+        title: 'Delete Custom Search',
+        message: `Delete "${item.label}" custom search?`,
+        confirmText: 'Delete',
+        cancelText: 'Keep It',
+        type: 'danger'
+      });
+
+      if (confirmed) {
         trainingSettings.customItems = trainingSettings.customItems.filter(i => i.id !== key);
         saveTrainingSettings();
         renderTrainingItems();
@@ -892,7 +900,15 @@ function saveCustomItem() {
 // ========================================
 
 async function resetToDefaults() {
-  if (confirm('Reset Oscar to puppy settings?\n\nThis will remove all custom searches and restore default weights.')) {
+  const confirmed = await OscarModal.confirm({
+    title: 'Reset to Puppy Settings',
+    message: 'Reset Oscar to puppy settings?\n\nThis will remove all custom searches and restore default weights.',
+    confirmText: 'Reset Oscar',
+    cancelText: 'Keep Training',
+    type: 'danger'
+  });
+
+  if (confirmed) {
     trainingSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
     await saveTrainingSettings();
     renderTrainingItems();
@@ -905,17 +921,51 @@ async function resetToDefaults() {
 
 let floatingMeterVisible = false;
 let lastFloatingScore = 0;
+let floatingCategoryStats = {};
+
+const floatingSpeechMessages = {
+  low: [
+    "I could sniff out more...",
+    "Enable more checks!",
+    "Minimal coverage mode",
+    "I'm just getting started!"
+  ],
+  medium: [
+    "Getting better coverage!",
+    "Keep training me!",
+    "Making good progress!",
+    "I'm warming up!"
+  ],
+  high: [
+    "Now we're sniffing!",
+    "Great coverage!",
+    "Well-trained mode!",
+    "Almost there!"
+  ],
+  max: [
+    "Maximum sniff power!",
+    "Elite compliance dog!",
+    "Nothing escapes me!",
+    "Fully trained! Woof!"
+  ]
+};
 
 function initFloatingMeter() {
   const floatingMeter = document.getElementById('floating-meter');
   const scorePreviewSection = document.querySelector('.score-preview-section');
   const scrollToMeterBtn = document.getElementById('scroll-to-meter');
+  const expandBtn = document.getElementById('floating-expand');
 
   if (!floatingMeter || !scorePreviewSection) return;
 
   // Scroll to meter button
   scrollToMeterBtn?.addEventListener('click', () => {
     scorePreviewSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  // Expand/collapse button
+  expandBtn?.addEventListener('click', () => {
+    floatingMeter.classList.toggle('expanded');
   });
 
   // Check visibility on scroll
@@ -937,29 +987,54 @@ function initFloatingMeter() {
   observer.observe(scorePreviewSection);
 }
 
-function updateFloatingMeter(totalWeight, maxWeight, enabledCount, percentage) {
+function updateFloatingMeter(totalWeight, maxWeight, enabledCount, percentage, categoryStats) {
   const floatingMeter = document.getElementById('floating-meter');
   const floatingScore = document.getElementById('floating-score');
   const floatingBar = document.getElementById('floating-bar');
   const floatingEnabled = document.getElementById('floating-enabled');
+  const floatingWeight = document.getElementById('floating-weight');
+  const floatingMaxWeight = document.getElementById('floating-max-weight');
   const floatingOscar = document.getElementById('floating-oscar');
+  const floatingSpeechText = document.getElementById('floating-speech-text');
+  const floatingCategoriesList = document.getElementById('floating-categories-list');
 
   if (!floatingMeter) return;
 
-  // Update values
+  // Store category stats for later use
+  if (categoryStats) {
+    floatingCategoryStats = categoryStats;
+  }
+
+  // Update main values
   floatingScore.textContent = percentage;
   floatingBar.style.width = percentage + '%';
   floatingEnabled.textContent = enabledCount;
+  floatingWeight.textContent = totalWeight;
+  floatingMaxWeight.textContent = maxWeight;
 
-  // Update Oscar's expression based on percentage
+  // Update Oscar's expression and speech based on percentage
+  let speechCategory;
   if (percentage < 25) {
     floatingOscar.textContent = '😴';
+    speechCategory = 'low';
   } else if (percentage < 50) {
     floatingOscar.textContent = '🐕';
+    speechCategory = 'medium';
   } else if (percentage < 80) {
     floatingOscar.textContent = '🐕‍🦺';
+    speechCategory = 'high';
   } else {
     floatingOscar.textContent = '🦮';
+    speechCategory = 'max';
+  }
+
+  // Update speech bubble with contextual message
+  const messages = floatingSpeechMessages[speechCategory];
+  floatingSpeechText.textContent = messages[Math.floor(Math.random() * messages.length)];
+
+  // Update category breakdown
+  if (floatingCategoriesList && floatingCategoryStats) {
+    renderFloatingCategories(floatingCategoriesList, floatingCategoryStats);
   }
 
   // Trigger animations on score change
@@ -975,6 +1050,56 @@ function updateFloatingMeter(totalWeight, maxWeight, enabledCount, percentage) {
     floatingOscar.classList.add('happy');
 
     lastFloatingScore = percentage;
+  }
+}
+
+function renderFloatingCategories(container, categoryStats) {
+  container.innerHTML = '';
+
+  // Render built-in categories
+  for (const [key, info] of Object.entries(CATEGORIES)) {
+    const stats = categoryStats[key];
+    if (!stats || stats.total === 0) continue;
+
+    const completionPercent = stats.total > 0 ? Math.round((stats.enabled / stats.total) * 100) : 0;
+    const isActive = stats.enabled > 0;
+
+    const itemEl = document.createElement('div');
+    itemEl.className = `floating-cat-item ${isActive ? '' : 'inactive'}`;
+    itemEl.dataset.category = key;
+
+    itemEl.innerHTML = `
+      <span class="floating-cat-icon">${info.icon}</span>
+      <span class="floating-cat-name">${info.label.split(' ')[0]}</span>
+      <div class="floating-cat-bar">
+        <div class="floating-cat-fill" style="width: ${completionPercent}%"></div>
+      </div>
+      <span class="floating-cat-percent">${completionPercent}%</span>
+    `;
+
+    container.appendChild(itemEl);
+  }
+
+  // Render custom category if it exists
+  if (categoryStats['custom'] && categoryStats['custom'].total > 0) {
+    const stats = categoryStats['custom'];
+    const completionPercent = stats.total > 0 ? Math.round((stats.enabled / stats.total) * 100) : 0;
+    const isActive = stats.enabled > 0;
+
+    const itemEl = document.createElement('div');
+    itemEl.className = `floating-cat-item ${isActive ? '' : 'inactive'}`;
+    itemEl.dataset.category = 'custom';
+
+    itemEl.innerHTML = `
+      <span class="floating-cat-icon">✨</span>
+      <span class="floating-cat-name">Custom</span>
+      <div class="floating-cat-bar">
+        <div class="floating-cat-fill" style="width: ${completionPercent}%"></div>
+      </div>
+      <span class="floating-cat-percent">${completionPercent}%</span>
+    `;
+
+    container.appendChild(itemEl);
   }
 }
 

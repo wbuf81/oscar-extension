@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OSCAR History - Scan History</title>
   <link rel="stylesheet" href="history.css">
+  <link rel="stylesheet" href="../utils/modal.css">
 </head>
 <body>
   <div class="container">
@@ -48,6 +49,17 @@
           <option value="fair">Fair (40-59%)</option>
           <option value="poor">Poor (&lt;40%)</option>
         </select>
+        <button id="toggle-compare-mode" class="btn btn-secondary btn-compare-toggle">
+          <span class="compare-icon">⚖️</span>
+          <span class="compare-text">Compare Scans</span>
+        </button>
+      </div>
+
+      <!-- Compare Mode Instructions -->
+      <div id="compare-instructions" class="compare-instructions hidden">
+        <span class="compare-instructions-icon">🐕</span>
+        <span class="compare-instructions-text">Select 2-4 scans to compare, then click "Compare Selected"</span>
+        <button id="exit-compare-mode" class="btn btn-secondary btn-small">Cancel</button>
       </div>
 
       <!-- History List -->
@@ -70,6 +82,39 @@
       </div>
     </main>
 
+    <!-- Floating Compare Bar -->
+    <div id="compare-bar" class="compare-bar hidden">
+      <div class="compare-bar-content">
+        <div class="compare-bar-info">
+          <span class="compare-bar-icon">⚖️</span>
+          <span class="compare-bar-count"><strong id="compare-count">0</strong> scans selected</span>
+        </div>
+        <div class="compare-bar-actions">
+          <button id="clear-compare-selection" class="btn btn-secondary btn-small">Clear</button>
+          <button id="compare-selected" class="btn btn-primary" disabled>
+            Compare Selected
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compare Modal -->
+    <div id="compare-modal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content modal-compare-content">
+        <div class="modal-header">
+          <h2>🐕 Oscar's Comparison</h2>
+          <button class="modal-close compare-modal-close">&times;</button>
+        </div>
+        <div id="compare-modal-body" class="modal-body">
+          <!-- Populated by JS -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary compare-modal-close">Close Comparison</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Detail Modal -->
     <div id="detail-modal" class="modal hidden">
       <div class="modal-backdrop"></div>
@@ -87,8 +132,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <p>© 2026 Compliance Pals. All rights reserved.</p>
+    </footer>
   </div>
 
+  <script src="../utils/modal.js"></script>
   <script src="history.js"></script>
 </body>
 </html>

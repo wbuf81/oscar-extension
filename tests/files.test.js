@@ -161,9 +161,9 @@ test('PRIVACY_POLICY mentions local processing', () => {
   assert(fileContains('PRIVACY_POLICY.md', 'local'), 'Privacy policy should mention local processing');
 });
 
-test('manifest version is 1.1.0', () => {
+test('manifest version is 1.2.0', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.json'), 'utf8'));
-  assert(manifest.version === '1.1.0', 'manifest version should be 1.1.0');
+  assert(manifest.version === '1.2.0', 'manifest version should be 1.2.0');
 });
 
 // No debug code in production

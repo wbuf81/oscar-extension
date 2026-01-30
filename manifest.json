@@ -2,15 +2,16 @@
   "manifest_version": 3,
   "name": "OSCAR - Website Compliance Scanner",
   "short_name": "OSCAR",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Scan websites for privacy policies, cookie banners, terms of service & more. 26 compliance checks in 6 languages.",
-  "author": "OSCAR Team",
-  "homepage_url": "https://github.com/anthropics/oscar-extension",
+  "author": "Compliance Pals",
+  "homepage_url": "https://github.com/wbuf81/oscar-extension",
   "permissions": [
     "activeTab",
     "tabs",
     "storage",
-    "scripting"
+    "scripting",
+    "cookies"
   ],
   "host_permissions": [
     "<all_urls>"

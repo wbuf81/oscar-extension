@@ -356,6 +356,87 @@ body {
   transform: scale(0.98);
 }
 
+/* Force Cookie Banner Button */
+.btn-cookie-banner {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px dashed var(--secondary);
+  color: var(--secondary);
+  transition: all 0.2s ease;
+}
+
+.btn-cookie-banner:hover {
+  background: var(--secondary);
+  color: var(--bmd-cream);
+  border-style: solid;
+}
+
+.btn-cookie-banner .btn-icon {
+  font-size: 16px;
+}
+
+.btn-cookie-banner .btn-text {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btn-cookie-banner.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.btn-cookie-banner.loading .btn-text::after {
+  content: '...';
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+/* Cookie Banner Result Toast */
+.cookie-banner-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--primary);
+  color: var(--bmd-cream);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.cookie-banner-toast.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.cookie-banner-toast.success {
+  background: var(--success);
+}
+
+.cookie-banner-toast.warning {
+  background: var(--warning);
+}
+
+.cookie-banner-toast.error {
+  background: var(--error);
+}
+
 /* Scan hint text */
 .scan-hint {
   font-size: 11px;
@@ -520,16 +601,304 @@ body {
   display: none;
 }
 
-/* Single Result Card - Legal document style */
+/* ========================================
+   Sniff-O-Meter Results Styling
+   ======================================== */
+
+/* Single Result Card - Sniff-O-Meter style */
 .result-card {
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
   margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(45, 37, 34, 0.08);
+  box-shadow: 0 4px 16px rgba(45, 37, 34, 0.12);
 }
 
+.result-card.sniff-o-meter-result {
+  border: 2px solid var(--secondary);
+}
+
+/* Oscar's Reaction Header */
+.result-oscar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--card) 100%);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.result-oscar-face {
+  font-size: 42px;
+  line-height: 1;
+  animation: oscarBounce 0.5s ease;
+}
+
+.result-oscar-face.celebrating {
+  animation: oscarCelebrate 1s ease;
+}
+
+@keyframes oscarBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes oscarCelebrate {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-5deg); }
+  50% { transform: scale(1.15) rotate(5deg); }
+  75% { transform: scale(1.1) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.result-oscar-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.result-oscar-speech {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.result-url {
+  font-size: 11px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+/* Score Gauge Section */
+.result-score-gauge {
+  padding: 16px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--card) 0%, var(--background) 100%);
+}
+
+.result-score-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.result-score-number {
+  font-size: 48px;
+  font-weight: 700;
+  font-family: 'Georgia', serif;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.result-score-number.score-excellent { color: var(--success); }
+.result-score-number.score-good { color: var(--warning); }
+.result-score-number.score-fair { color: #B87333; }
+.result-score-number.score-poor { color: var(--error); }
+
+.result-score-percent {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.result-score-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.result-gauge-container {
+  margin-bottom: 12px;
+}
+
+.result-gauge-bg {
+  height: 12px;
+  background: var(--accent);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-gauge-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.result-gauge-fill.score-excellent {
+  background: linear-gradient(90deg, #6B9B6B 0%, var(--success) 100%);
+}
+
+.result-gauge-fill.score-good {
+  background: linear-gradient(90deg, #C9A227 0%, var(--warning) 100%);
+}
+
+.result-gauge-fill.score-fair {
+  background: linear-gradient(90deg, #CD853F 0%, #B87333 100%);
+}
+
+.result-gauge-fill.score-poor {
+  background: linear-gradient(90deg, #A05050 0%, var(--error) 100%);
+}
+
+/* Animated shine effect on gauge */
+.result-gauge-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: gaugeShine 2s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes gaugeShine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+.result-found-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.result-found-icon {
+  font-size: 16px;
+}
+
+.result-found-summary strong {
+  color: var(--primary);
+}
+
+/* Category Breakdown Section */
+.result-category-breakdown {
+  padding: 12px 16px;
+  border-top: 1px solid var(--card-border);
+  background: var(--background);
+}
+
+.result-category-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.result-categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.result-category-item {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--card-border);
+  transition: all 0.2s ease;
+}
+
+.result-category-item:hover {
+  border-color: var(--secondary);
+  transform: translateY(-1px);
+}
+
+.result-category-item.complete {
+  border-color: var(--success);
+  background: var(--success-bg);
+}
+
+.result-category-item.complete .result-category-fill {
+  background: var(--success);
+}
+
+.result-category-item.partial .result-category-fill {
+  background: var(--warning);
+}
+
+.result-category-item.low .result-category-fill {
+  background: #CD853F;
+}
+
+.result-category-item.none .result-category-fill {
+  background: var(--text-muted);
+  opacity: 0.3;
+}
+
+.result-category-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.result-category-icon {
+  font-size: 14px;
+}
+
+.result-category-name {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.result-category-score {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.result-category-bar {
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.result-category-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Compliance Items Section */
+.result-compliance-section {
+  border-top: 1px solid var(--card-border);
+  padding: 12px 16px;
+  background: var(--card);
+}
+
+.result-compliance-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+/* Legacy styles for backwards compatibility */
 .result-header {
   display: flex;
   align-items: center;
@@ -537,16 +906,6 @@ body {
   padding: 12px 16px;
   background: linear-gradient(180deg, var(--accent) 0%, var(--card) 100%);
   border-bottom: 1px solid var(--card-border);
-}
-
-.result-url {
-  font-size: 12px;
-  color: var(--text-secondary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 200px;
-  font-family: 'Monaco', 'Consolas', monospace;
 }
 
 .result-score {
@@ -663,11 +1022,18 @@ body {
   text-decoration: underline;
 }
 
-/* Compare Results - Card-based layout */
+/* ========================================
+   Compare Results - Sniff-O-Meter Style
+   ======================================== */
+
 .compare-results {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.compare-results.sniff-o-meter-compare-results {
+  gap: 10px;
 }
 
 .compare-results-header {
@@ -679,42 +1045,255 @@ body {
   border-bottom: 1px solid var(--card-border);
 }
 
-/* Individual site card in comparison */
+/* Oscar's Compare Header */
+.compare-oscar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--card) 100%);
+  border-radius: 10px;
+  border: 2px solid var(--secondary);
+}
+
+.compare-oscar-face {
+  font-size: 36px;
+  line-height: 1;
+  animation: oscarBounce 0.5s ease;
+}
+
+.compare-oscar-info {
+  flex: 1;
+}
+
+.compare-oscar-speech {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  font-style: italic;
+}
+
+.compare-sites-count {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Compare Stats Bar */
+.compare-stats-bar {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background: var(--card);
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+
+.compare-stat {
+  text-align: center;
+  padding: 4px 12px;
+}
+
+.compare-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Georgia', serif;
+}
+
+.compare-stat.best .compare-stat-value {
+  color: var(--success);
+}
+
+.compare-stat.worst .compare-stat-value {
+  color: var(--error);
+}
+
+.compare-stat-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Compare Cards Container */
+.compare-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Individual site card in comparison - Sniff-O-Meter style */
 .compare-card {
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: 8px;
   overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.compare-card.sniff-o-meter-compare {
+  border-radius: 10px;
+}
+
+.compare-card.sniff-o-meter-compare:hover {
+  border-color: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 37, 34, 0.1);
 }
 
 .compare-card-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
+  gap: 10px;
+  padding: 10px 12px;
   background: linear-gradient(180deg, var(--accent) 0%, var(--card) 100%);
   border-bottom: 1px solid var(--card-border);
 }
 
+.compare-oscar-mini {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.compare-site-info {
+  flex: 1;
+  min-width: 0;
+}
+
 .compare-card-site {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 180px;
+  display: block;
 }
 
-.compare-card-score {
-  flex-shrink: 0;
+.compare-found-mini {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.compare-score-mini {
+  display: flex;
+  align-items: baseline;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--background);
+}
+
+.compare-score-mini.score-excellent { background: var(--success-bg); }
+.compare-score-mini.score-good { background: var(--warning-bg); }
+.compare-score-mini.score-fair { background: #FFF0E0; }
+.compare-score-mini.score-poor { background: var(--error-bg); }
+
+.compare-score-value {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Georgia', serif;
+}
+
+.compare-score-mini.score-excellent .compare-score-value { color: var(--success); }
+.compare-score-mini.score-good .compare-score-value { color: var(--warning); }
+.compare-score-mini.score-fair .compare-score-value { color: #B87333; }
+.compare-score-mini.score-poor .compare-score-value { color: var(--error); }
+
+.compare-score-percent {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 .compare-card-body {
-  padding: 10px 14px;
+  padding: 10px 12px;
 }
 
-/* Compliance grid for compare cards */
+/* Mini gauge in compare cards */
+.compare-gauge-mini {
+  height: 6px;
+  background: var(--accent);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.compare-gauge-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.compare-gauge-fill.score-excellent { background: var(--success); }
+.compare-gauge-fill.score-good { background: var(--warning); }
+.compare-gauge-fill.score-fair { background: #CD853F; }
+.compare-gauge-fill.score-poor { background: var(--error); }
+
+/* Mini category bars in compare cards */
+.compare-categories-mini {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.compare-mini-category {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 60px;
+}
+
+.compare-mini-icon {
+  font-size: 12px;
+}
+
+.compare-mini-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.compare-mini-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.compare-mini-fill.complete { background: var(--success); }
+.compare-mini-fill.partial { background: var(--warning); }
+.compare-mini-fill.low { background: #CD853F; }
+
+/* Compare Card Footer - View in History link */
+.compare-card-footer {
+  padding: 8px 12px;
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+  background: var(--accent);
+}
+
+.compare-view-history {
+  font-size: 11px;
+  color: var(--primary);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.compare-card.sniff-o-meter-compare {
+  cursor: pointer;
+}
+
+.compare-card.sniff-o-meter-compare:hover .compare-view-history {
+  text-decoration: underline;
+}
+
+/* Legacy compliance grid (fallback) */
 .compare-compliance-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -755,7 +1334,7 @@ body {
   color: var(--text-primary);
 }
 
-/* Summary bar at bottom of compare */
+/* Legacy summary (fallback) */
 .compare-summary {
   display: flex;
   justify-content: center;
@@ -884,6 +1463,70 @@ body {
 
 .empty-state-text {
   font-size: 13px;
+}
+
+/* Error Card - Dog Themed */
+.error-card {
+  text-align: center;
+  padding: 24px 20px;
+  background: linear-gradient(135deg, var(--error-bg) 0%, var(--card) 100%);
+  border: 2px solid var(--error);
+  border-radius: 12px;
+  margin: 8px 0;
+}
+
+.error-oscar {
+  font-size: 48px;
+  margin-bottom: 12px;
+  animation: errorShake 0.5s ease-in-out;
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-5px) rotate(-5deg); }
+  40% { transform: translateX(5px) rotate(5deg); }
+  60% { transform: translateX(-5px) rotate(-3deg); }
+  80% { transform: translateX(5px) rotate(3deg); }
+}
+
+.error-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--error);
+  margin-bottom: 8px;
+  font-family: 'Georgia', serif;
+}
+
+.error-message {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+  padding: 0 8px;
+}
+
+.error-hint {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 500;
+  padding: 8px 12px;
+  background: var(--card);
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* Site Footer */
+.site-footer {
+  text-align: center;
+  padding: 16px;
+  margin-top: 16px;
+  border-top: 1px solid var(--card-border);
+}
+
+.site-footer p {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 0;
 }
 
 /* Utility Classes */

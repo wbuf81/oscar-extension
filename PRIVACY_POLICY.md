@@ -1,6 +1,6 @@
 # Privacy Policy for OSCAR - Website Compliance Scanner
 
-**Last Updated:** January 30, 2025
+**Last Updated:** January 30, 2026
 
 ## Overview
 
@@ -63,6 +63,7 @@ OSCAR requires certain browser permissions to function. Here's why each is neede
 | `tabs` | Enables the "Compare Tabs" feature to list and scan multiple tabs |
 | `storage` | Saves your settings and scan history locally in your browser |
 | `scripting` | Injects the compliance scanner script into web pages |
+| `cookies` | Enables the "Force Cookie Banner" feature to clear consent cookies and re-trigger cookie banners |
 | `<all_urls>` | Allows scanning any website (the scanner only runs when you initiate a scan) |
 
 ## Third-Party Services
@@ -95,7 +96,7 @@ Since all data is stored locally on your device:
 ## Open Source
 
 OSCAR is open source. You can review our code to verify our privacy practices at:
-https://github.com/anthropics/oscar-extension
+https://github.com/wbuf81/oscar-extension
 
 ## Contact
 

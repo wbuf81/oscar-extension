@@ -205,7 +205,7 @@ Required to allow scanning of any website the user visits. The scanner only runs
 
 ### Privacy Policy URL
 ```
-https://github.com/anthropics/oscar-extension/blob/main/PRIVACY_POLICY.md
+https://github.com/wbuf81/oscar-extension/blob/main/PRIVACY_POLICY.md
 ```
 
 ---
@@ -233,12 +233,12 @@ Free
 
 ### Support URL (optional)
 ```
-https://github.com/anthropics/oscar-extension/issues
+https://github.com/wbuf81/oscar-extension/issues
 ```
 
 ### Homepage URL (optional)
 ```
-https://github.com/anthropics/oscar-extension
+https://github.com/wbuf81/oscar-extension
 ```
 
 ---

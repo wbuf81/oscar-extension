@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OSCAR Options - Train Oscar</title>
   <link rel="stylesheet" href="options.css">
+  <link rel="stylesheet" href="../utils/modal.css">
 </head>
 <body>
   <div class="container">
@@ -152,7 +153,7 @@
     </div>
 
     <!-- Floating Mini Sniff-O-Meter -->
-    <div id="floating-meter" class="floating-meter">
+    <div id="floating-meter" class="floating-meter expanded">
       <div class="floating-meter-header">
         <span class="floating-oscar" id="floating-oscar">🐕</span>
         <div class="floating-stats">
@@ -162,19 +163,52 @@
           </div>
           <div class="floating-label">Sniff Power</div>
         </div>
+        <button class="floating-expand" id="floating-expand" title="Toggle details">▲</button>
       </div>
+
       <div class="floating-bar-container">
         <div class="floating-bar-bg">
           <div class="floating-bar-fill" id="floating-bar"></div>
         </div>
       </div>
-      <div class="floating-details">
-        <span class="floating-enabled"><span id="floating-enabled">0</span> checks</span>
-        <button class="floating-scroll-top" id="scroll-to-meter" title="Back to Sniff-O-Meter">↑</button>
+
+      <div class="floating-summary">
+        <div class="floating-stat-item">
+          <span class="floating-stat-value" id="floating-enabled">0</span>
+          <span class="floating-stat-label">checks on</span>
+        </div>
+        <div class="floating-stat-item">
+          <span class="floating-stat-value" id="floating-weight">0</span>
+          <span class="floating-stat-label">/ <span id="floating-max-weight">0</span> pts</span>
+        </div>
+      </div>
+
+      <div class="floating-speech" id="floating-speech">
+        <span class="floating-speech-text" id="floating-speech-text">Ready to sniff!</span>
+      </div>
+
+      <!-- Expandable category breakdown -->
+      <div class="floating-categories" id="floating-categories">
+        <div class="floating-categories-title">Category Breakdown</div>
+        <div class="floating-categories-list" id="floating-categories-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="floating-actions">
+        <button class="floating-scroll-top" id="scroll-to-meter" title="Back to Sniff-O-Meter">
+          ↑ Back to top
+        </button>
       </div>
     </div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <p>© 2026 Compliance Pals. All rights reserved.</p>
+    </footer>
   </div>
 
+  <script src="../utils/modal.js"></script>
   <script src="options.js"></script>
 </body>
 </html>
