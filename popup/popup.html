@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSCAR</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container" id="main-view">
+    <header class="header">
+      <div class="header-content">
+        <img src="/icons/icon128.png" alt="OSCAR" class="header-icon">
+        <div class="header-text">
+          <h1>OSCAR</h1>
+          <p class="subtitle">Obligation Scanning & Compliance Analysis Reporter</p>
+        </div>
+      </div>
+      <nav class="header-nav">
+        <button id="open-about" class="header-nav-btn" title="About Oscar">
+          <span class="nav-icon">🐕</span>
+          <span>About Oscar</span>
+        </button>
+        <button id="open-history" class="header-nav-btn" title="View History">
+          <span class="nav-icon">📋</span>
+          <span>History</span>
+        </button>
+        <button id="open-options" class="header-nav-btn" title="Train Oscar">
+          <span class="nav-icon">⚙️</span>
+          <span>Train Oscar</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Quick Stats (shown when user has history) -->
+    <div id="quick-stats" class="quick-stats hidden">
+      <div class="quick-stat">
+        <span class="quick-stat-value" id="stat-scans">0</span>
+        <span class="quick-stat-label">Scans</span>
+      </div>
+      <div class="quick-stat">
+        <span class="quick-stat-value" id="stat-avg">0%</span>
+        <span class="quick-stat-label">Avg Score</span>
+      </div>
+      <div class="quick-stat">
+        <span class="quick-stat-value" id="stat-sites">0</span>
+        <span class="quick-stat-label">Sites</span>
+      </div>
+    </div>
+
+    <!-- Mode Selection -->
+    <div class="mode-tabs">
+      <button class="mode-tab active" data-mode="current">Current Tab</button>
+      <button class="mode-tab" data-mode="compare">Compare Tabs</button>
+    </div>
+
+    <!-- Current Tab Mode -->
+    <div id="current-mode" class="mode-content active">
+      <div id="current-tab-info" class="tab-info">
+        <span class="tab-favicon"></span>
+        <span class="tab-url">Loading...</span>
+      </div>
+      <button id="scan-current" class="btn btn-primary btn-large btn-scan">
+        <span class="btn-icon">🔍</span>
+        <span class="btn-text">Scan This Page</span>
+      </button>
+      <p class="scan-hint">Oscar will sniff out privacy policies, cookie banners, terms of service & more</p>
+    </div>
+
+    <!-- Compare Tabs Mode -->
+    <div id="compare-mode" class="mode-content">
+      <p class="compare-hint">Select tabs to compare their compliance scores</p>
+      <div id="tabs-list" class="tabs-list">
+        <!-- Tabs will be populated here -->
+      </div>
+      <div class="compare-actions">
+        <button id="select-all" class="btn btn-secondary btn-small">Select All</button>
+        <button id="scan-selected" class="btn btn-primary" disabled>
+          Scan Selected (<span id="selected-count">0</span>)
+        </button>
+      </div>
+    </div>
+
+    <!-- Scanning Progress -->
+    <div id="scanning-progress" class="progress-container hidden">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <p class="progress-text">Scanning...</p>
+    </div>
+
+    <!-- Results Section -->
+    <div id="results-section" class="results-section hidden">
+      <!-- Results will be rendered here -->
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <button id="clear-results" class="btn btn-link hidden">Clear Results</button>
+    </div>
+
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

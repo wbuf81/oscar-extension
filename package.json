@@ -1,0 +1,39 @@
+{
+  "name": "oscar-extension",
+  "version": "1.1.0",
+  "description": "OSCAR - Website Compliance Scanner. Scan websites for privacy policies, cookie banners, terms of service, and 26 other compliance elements.",
+  "main": "background/service-worker.js",
+  "scripts": {
+    "test": "node tests/run-all.js",
+    "test:manifest": "node tests/manifest.test.js",
+    "test:patterns": "node tests/patterns.test.js",
+    "test:files": "node tests/files.test.js",
+    "build": "node scripts/build.js",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "compliance",
+    "privacy",
+    "gdpr",
+    "ccpa",
+    "cookie-consent",
+    "terms-of-service",
+    "accessibility",
+    "legal",
+    "scanner"
+  ],
+  "author": "OSCAR Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthropics/oscar-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anthropics/oscar-extension/issues"
+  },
+  "homepage": "https://github.com/anthropics/oscar-extension#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

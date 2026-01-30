@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSCAR - About</title>
+  <link rel="stylesheet" href="about.css">
+</head>
+<body>
+  <div class="container">
+    <header class="page-header">
+      <div class="header-content">
+        <img src="../icons/icon48.png" alt="OSCAR" class="header-icon">
+        <div class="header-text">
+          <h1>About Oscar</h1>
+          <p class="subtitle">Your friendly compliance companion</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Oscar Banner -->
+      <div class="oscar-banner-section">
+        <div class="oscar-banner-container">
+          <img src="../popup/header.jpg" alt="OSCAR the Bernese Mountain Dog" class="oscar-banner">
+          <button id="give-cookie" class="treat-btn">
+            <span class="treat-icon">🦴</span>
+            <span class="treat-text">Give Oscar a Treat</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🐕</span>
+          Meet Oscar
+        </h2>
+        <div class="about-text">
+          <p>
+            <strong>OSCAR</strong> stands for <em>Obligation Scanning & Compliance Analysis Reporter</em>.
+            He's a diligent Bernese Mountain Dog who loves sniffing out legal compliance items on websites.
+          </p>
+          <p>
+            Just like a real dog with a keen nose, Oscar can detect privacy policies, cookie banners,
+            terms of service, and other important legal documents that websites should have—even when
+            they're hidden in footers or loaded dynamically.
+          </p>
+          <p>
+            Oscar can check for <strong>26 different compliance items</strong> across 8 categories, including the new ICANN & Registry Compliance checks.
+            Visit "Train Oscar" to enable additional checks or add your own custom searches!
+          </p>
+        </div>
+      </section>
+
+      <!-- What Oscar Finds Section -->
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🔍</span>
+          What Oscar Sniffs Out
+        </h2>
+
+        <!-- Privacy & Data Protection -->
+        <h3 class="category-title"><span>🔒</span> Privacy & Data Protection</h3>
+        <div class="compliance-cards">
+          <div class="compliance-card">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">📋</span>
+              <span class="compliance-label">Privacy Policies</span>
+            </div>
+            <p class="compliance-description">
+              Required by GDPR, CCPA, and virtually every data protection law worldwide. Privacy policies explain how a website collects, uses, and protects your personal information. Without one, sites face fines up to €20 million or 4% of global revenue under GDPR.
+            </p>
+          </div>
+
+          <div class="compliance-card">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🚫</span>
+              <span class="compliance-label">Do Not Sell (CCPA)</span>
+            </div>
+            <p class="compliance-description">
+              Required by California's CCPA/CPRA for businesses that sell personal information. California residents have the right to opt-out of the sale of their data. Similar laws now exist in Virginia, Colorado, Connecticut, and other states.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">📥</span>
+              <span class="compliance-label">Data Subject Request</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              GDPR and CCPA grant users the right to access, download, or delete their personal data. Many sites provide dedicated forms or portals for submitting Data Subject Access Requests (DSARs).
+            </p>
+          </div>
+        </div>
+
+        <!-- Cookie Compliance -->
+        <h3 class="category-title"><span>🍪</span> Cookie Compliance</h3>
+        <div class="compliance-cards">
+          <div class="compliance-card">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🍪</span>
+              <span class="compliance-label">Cookie Banners</span>
+            </div>
+            <p class="compliance-description">
+              Mandated by the EU ePrivacy Directive and GDPR for any site using non-essential cookies. Users must give informed consent before tracking cookies are placed. Non-compliance can result in significant penalties from data protection authorities.
+            </p>
+          </div>
+
+          <div class="compliance-card">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">📄</span>
+              <span class="compliance-label">Cookie Policy</span>
+            </div>
+            <p class="compliance-description">
+              A detailed document explaining what cookies are used, their purposes, and retention periods. Required alongside cookie banners to provide full transparency under GDPR's informed consent requirements.
+            </p>
+          </div>
+
+          <div class="compliance-card">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">⚙️</span>
+              <span class="compliance-label">Cookie Settings</span>
+            </div>
+            <p class="compliance-description">
+              GDPR and ePrivacy require that consent be as easy to withdraw as it is to give. Cookie preference centers allow users to manage their consent choices at any time, not just when the banner first appears.
+            </p>
+          </div>
+        </div>
+
+        <!-- Legal Disclosures -->
+        <h3 class="category-title"><span>⚖️</span> Legal Disclosures</h3>
+        <div class="compliance-cards">
+          <div class="compliance-card">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">📜</span>
+              <span class="compliance-label">Terms of Service</span>
+            </div>
+            <p class="compliance-description">
+              The legal contract between the website and its users. Terms of Service define acceptable use, liability limitations, and user rights. While not legally mandated, they're essential for protecting both the business and establishing clear user expectations.
+            </p>
+          </div>
+
+          <div class="compliance-card">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">⚖️</span>
+              <span class="compliance-label">Legal Notices / Impressum</span>
+            </div>
+            <p class="compliance-description">
+              Required in many jurisdictions including Germany (Impressum) and other EU countries. Legal notices identify the website operator, provide contact information, and may include business registration details and VAT numbers.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🤝</span>
+              <span class="compliance-label">Dispute Resolution</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Often required for e-commerce sites under EU ODR regulations. Must inform consumers about available dispute resolution mechanisms and link to the EU Online Dispute Resolution platform for cross-border transactions.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">📞</span>
+              <span class="compliance-label">Contact Information</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Required by various e-commerce laws (EU Consumer Rights Directive) and helps establish legitimacy. Users should be able to easily find how to contact the business.
+            </p>
+          </div>
+        </div>
+
+        <!-- Consumer Protection -->
+        <h3 class="category-title"><span>🛒</span> Consumer Protection</h3>
+        <div class="compliance-cards">
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">💰</span>
+              <span class="compliance-label">Refund / Return Policy</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Required for e-commerce in most jurisdictions (FTC in US, EU Consumer Rights Directive). Clearly explains how customers can return products and receive refunds. Essential for building consumer trust.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">📦</span>
+              <span class="compliance-label">Shipping Policy</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Required for e-commerce sites under various consumer protection laws. Should clearly state shipping costs, delivery times, and available shipping methods.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🔞</span>
+              <span class="compliance-label">Age Verification</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Required by COPPA (US) for sites collecting data from children under 13, and by various regulations for alcohol, tobacco, gambling, and adult content sites. Some jurisdictions require age gates before accessing certain content.
+            </p>
+          </div>
+        </div>
+
+        <!-- Accessibility -->
+        <h3 class="category-title"><span>♿</span> Accessibility & Inclusion</h3>
+        <div class="compliance-cards">
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">♿</span>
+              <span class="compliance-label">Accessibility Statement</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Increasingly required under ADA (US), European Accessibility Act (EU 2025), Section 508 (US Government), and similar laws worldwide. Documents accessibility features, known issues, and how users can request accommodations.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🗺️</span>
+              <span class="compliance-label">Sitemap</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              While not legally required, sitemaps improve accessibility and help users navigate the site. They're also beneficial for SEO and can help screen reader users understand site structure.
+            </p>
+          </div>
+        </div>
+
+        <!-- Content & IP -->
+        <h3 class="category-title"><span>©️</span> Content & Intellectual Property</h3>
+        <div class="compliance-cards">
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">©️</span>
+              <span class="compliance-label">DMCA / Copyright</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              The Digital Millennium Copyright Act provides safe harbor for platforms hosting user content—but only if they have proper takedown procedures. A DMCA policy is essential for any site with user-generated content to avoid liability.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🚨</span>
+              <span class="compliance-label">Report Abuse</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Essential for platforms with user-generated content. The EU Digital Services Act requires clear mechanisms for reporting illegal content. Helps platforms respond to harmful content and maintain safe harbor protections.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🔗</span>
+              <span class="compliance-label">Affiliate Disclosure</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Required by the FTC (US) for sites that receive compensation for endorsements or affiliate links. Must clearly disclose any material connection between the site and products/services being promoted.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">📢</span>
+              <span class="compliance-label">Ad Choices / Interest-Based Ads</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Self-regulatory requirement from the Digital Advertising Alliance (DAA) and Network Advertising Initiative (NAI). Provides transparency about interest-based advertising and allows users to opt out.
+            </p>
+          </div>
+        </div>
+
+        <!-- Corporate Responsibility -->
+        <h3 class="category-title"><span>🏢</span> Corporate Responsibility</h3>
+        <div class="compliance-cards">
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">⛓️</span>
+              <span class="compliance-label">Modern Slavery Statement</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Required by the UK Modern Slavery Act (2015) for large companies and Australia's Modern Slavery Act. Details steps taken to ensure slavery and human trafficking aren't part of the business or supply chain.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🌱</span>
+              <span class="compliance-label">Environmental / Sustainability</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Increasingly required in the EU under the Corporate Sustainability Reporting Directive (CSRD). Also helps avoid greenwashing accusations. Details environmental impact, carbon footprint, and sustainability initiatives.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🔐</span>
+              <span class="compliance-label">Security / Vulnerability Disclosure</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Recommended by CISA and required in some industries. Provides a channel for security researchers to report vulnerabilities responsibly. May include bug bounty programs or security.txt files.
+            </p>
+          </div>
+        </div>
+
+        <!-- ICANN & Registry Compliance -->
+        <h3 class="category-title"><span>🌐</span> ICANN & Registry Compliance</h3>
+        <div class="compliance-cards">
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🔍</span>
+              <span class="compliance-label">WHOIS / RDAP Lookup</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Domain registration data lookup services. ICANN requires registrars to provide RDAP (Registration Data Access Protocol) services, which replaced WHOIS on January 28, 2025. Essential for verifying domain ownership and contact information.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🚫</span>
+              <span class="compliance-label">Domain Abuse Contact</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Required under ICANN's Registrar Accreditation Agreement (RAA Section 3.18). Registrars must publish abuse contact information and have procedures to investigate and respond to abuse reports within two business days. Critical for DNS abuse mitigation.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">⚖️</span>
+              <span class="compliance-label">UDRP / Domain Disputes</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              The Uniform Domain-Name Dispute-Resolution Policy (UDRP) is ICANN's mandatory arbitration process for domain name disputes. Provides information about how to file cybersquatting complaints through WIPO or other approved dispute resolution providers.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🏢</span>
+              <span class="compliance-label">Registrar Information</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              Details about the ICANN-accredited registrar managing domain registrations. The 2023 Global Amendment to the RAA requires registrars to maintain transparency about their accreditation status and comply with ICANN's consensus policies.
+            </p>
+          </div>
+
+          <div class="compliance-card disabled-by-default">
+            <div class="compliance-card-header">
+              <span class="compliance-icon">🔄</span>
+              <span class="compliance-label">Domain Transfer Policy</span>
+              <span class="badge-optional">Optional</span>
+            </div>
+            <p class="compliance-description">
+              ICANN's Transfer Policy governs how domains move between registrars. Must explain how to obtain authorization codes (EPP/Auth codes), transfer locks, and the 60-day transfer prohibition after registration or previous transfer.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to Use Section -->
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">💡</span>
+          How to Use Oscar
+        </h2>
+        <div class="steps-list">
+          <div class="step-item">
+            <span class="step-number">1</span>
+            <div class="step-content">
+              <strong>Scan a Page</strong>
+              <p>Click "Scan This Page" to have Oscar sniff out compliance items on the current website.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <span class="step-number">2</span>
+            <div class="step-content">
+              <strong>Compare Sites</strong>
+              <p>Use "Compare Tabs" to scan multiple sites at once and see how they stack up.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <span class="step-number">3</span>
+            <div class="step-content">
+              <strong>Train Oscar</strong>
+              <p>Customize what Oscar looks for by enabling/disabling items or adding your own searches.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <span class="step-number">4</span>
+            <div class="step-content">
+              <strong>Review History</strong>
+              <p>Check your scan history to track compliance across sites you've visited.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Credits Section -->
+      <section class="section credits-section">
+        <p class="version">OSCAR v1.1.0</p>
+        <p class="credits">Made with 🐾 for compliance enthusiasts everywhere</p>
+      </section>
+    </main>
+
+    <!-- Cookie Lightbox -->
+    <div id="cookie-lightbox" class="cookie-lightbox hidden">
+      <div class="cookie-lightbox-backdrop"></div>
+      <div class="cookie-lightbox-content">
+        <div class="cookie-lightbox-header">
+          <span class="cookie-lightbox-title">🐕 Oscar says...</span>
+        </div>
+        <div class="cookie-lightbox-body">
+          <p id="oscar-pun" class="oscar-pun"></p>
+        </div>
+        <button id="close-cookie-lightbox" class="btn btn-secondary btn-small">Thanks, Oscar!</button>
+      </div>
+    </div>
+
+    <!-- Flying Cookies Container -->
+    <div id="flying-cookies" class="flying-cookies"></div>
+  </div>
+
+  <script src="about.js"></script>
+</body>
+</html>

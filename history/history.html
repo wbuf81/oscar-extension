@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSCAR History - Scan History</title>
+  <link rel="stylesheet" href="history.css">
+</head>
+<body>
+  <div class="container">
+    <header class="page-header">
+      <div class="header-content">
+        <img src="../icons/icon48.png" alt="OSCAR" class="header-icon">
+        <div class="header-text">
+          <h1>Scan History</h1>
+          <p class="subtitle">Oscar's compliance scan records</p>
+        </div>
+        <button id="clear-all-history" class="btn btn-danger btn-header">
+          Clear All History
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Stats Summary -->
+      <div id="stats-summary" class="stats-summary">
+        <div class="stat-card">
+          <div class="stat-value" id="total-scans">0</div>
+          <div class="stat-label">Total Scans</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="avg-score">0%</div>
+          <div class="stat-label">Avg Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="unique-sites">0</div>
+          <div class="stat-label">Unique Sites</div>
+        </div>
+      </div>
+
+      <!-- Filter/Search -->
+      <div class="filter-bar">
+        <input type="text" id="search-input" placeholder="Search by URL..." class="search-input">
+        <select id="score-filter" class="filter-select">
+          <option value="all">All Scores</option>
+          <option value="excellent">Excellent (80%+)</option>
+          <option value="good">Good (60-79%)</option>
+          <option value="fair">Fair (40-59%)</option>
+          <option value="poor">Poor (&lt;40%)</option>
+        </select>
+      </div>
+
+      <!-- History List -->
+      <div id="history-list" class="history-list">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">🐕</div>
+        <h3>No scan history yet</h3>
+        <p>When Oscar sniffs out compliance items on websites, they'll appear here.</p>
+      </div>
+
+      <!-- No Results State -->
+      <div id="no-results-state" class="empty-state hidden">
+        <div class="empty-icon">🔍</div>
+        <h3>No matching results</h3>
+        <p>Try adjusting your search or filter.</p>
+      </div>
+    </main>
+
+    <!-- Detail Modal -->
+    <div id="detail-modal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modal-title">Scan Details</h2>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div id="modal-body" class="modal-body">
+          <!-- Populated by JS -->
+        </div>
+        <div class="modal-footer">
+          <button id="delete-scan" class="btn btn-danger">Delete This Scan</button>
+          <button class="btn btn-secondary modal-close-btn">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="history.js"></script>
+</body>
+</html>

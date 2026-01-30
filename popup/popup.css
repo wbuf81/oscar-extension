@@ -1,0 +1,1177 @@
+/* Oscar Extension - Bernese Mountain Dog Legal Theme */
+/* Warm browns, tans, and cream - inspired by BMD coloring */
+
+:root {
+  /* Bernese Mountain Dog color palette */
+  --bmd-black: #1a1612;
+  --bmd-rust: #8B4513;
+  --bmd-tan: #C4956A;
+  --bmd-cream: #FAF6F1;
+  --bmd-white: #FFFFFF;
+
+  /* Theme colors */
+  --primary: #6B4423;
+  --primary-hover: #5A3A1E;
+  --primary-light: #8B5A2B;
+  --secondary: #C4956A;
+  --secondary-light: #D4A574;
+  --accent: #E8DDD4;
+  --background: #FAF6F1;
+  --card: #FFFFFF;
+  --card-border: #E5DDD5;
+  --text-primary: #2D2522;
+  --text-secondary: #6B5D52;
+  --text-muted: #9B8B7A;
+  --success: #5D7A5D;
+  --success-bg: #E8F0E8;
+  --success-text: #3D5A3D;
+  --warning: #B8860B;
+  --warning-bg: #FFF8E7;
+  --warning-text: #8B6914;
+  --error: #8B3A3A;
+  --error-bg: #F8E8E8;
+  --error-text: #6B2A2A;
+}
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--background);
+  width: 400px;
+  min-height: 500px;
+}
+
+.container {
+  padding: 16px;
+}
+
+/* Header - Consistent with History/Options pages */
+.header {
+  background: linear-gradient(180deg, var(--card) 0%, var(--accent) 100%);
+  border-bottom: 2px solid var(--secondary);
+  margin: -16px -16px 16px -16px;
+  padding: 16px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.header-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(107, 68, 35, 0.25);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.header-icon:hover {
+  transform: scale(1.05) rotate(-3deg);
+}
+
+.header-text {
+  flex: 1;
+}
+
+.header-text h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Georgia', serif;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.2px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* Header Navigation */
+.header-nav {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--card-border);
+}
+
+.header-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 11px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.header-nav-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bmd-cream);
+}
+
+.header-nav-btn .nav-icon {
+  font-size: 12px;
+}
+
+/* Quick Stats Bar */
+.quick-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 16px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.quick-stats.hidden {
+  display: none;
+}
+
+.quick-stat {
+  text-align: center;
+}
+
+.quick-stat-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Georgia', serif;
+  line-height: 1.2;
+}
+
+.quick-stat-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Mode Tabs - Legal document tab style */
+.mode-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.mode-tab:hover {
+  background: var(--accent);
+  border-color: var(--secondary);
+}
+
+.mode-tab.active {
+  background: var(--primary);
+  color: var(--bmd-cream);
+  border-color: var(--primary);
+  box-shadow: 0 2px 4px rgba(107, 68, 35, 0.2);
+}
+
+.mode-tab:active {
+  transform: scale(0.98);
+}
+
+/* Mode Content */
+.mode-content {
+  display: none;
+  animation: fadeIn 0.2s ease;
+}
+
+.mode-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tab Info - Like a legal document reference */
+.tab-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 3px solid var(--secondary);
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 12px;
+}
+
+.tab-favicon {
+  width: 16px;
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+.tab-url {
+  font-size: 12px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+/* Buttons - Professional legal style */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--primary-light) 0%, var(--primary) 100%);
+  color: var(--bmd-cream);
+  box-shadow: 0 2px 4px rgba(107, 68, 35, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--primary-hover) 100%);
+  box-shadow: 0 3px 6px rgba(107, 68, 35, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--card);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--secondary);
+}
+
+.btn-large {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 15px;
+}
+
+.btn-small {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.btn-link {
+  background: none;
+  color: var(--primary);
+  padding: 8px;
+  font-size: 12px;
+}
+
+.btn-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+/* Scan button special styling */
+.btn-scan {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-scan::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.btn-scan:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-scan:active {
+  transform: scale(0.98);
+}
+
+/* Scan hint text */
+.scan-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Compare Mode Hint */
+.compare-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Tabs List (Compare Mode) */
+.tabs-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: var(--card);
+}
+
+.tab-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--accent);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.tab-item:last-child {
+  border-bottom: none;
+}
+
+.tab-item:hover {
+  background: var(--accent);
+}
+
+.tab-item.selected {
+  background: var(--secondary-light);
+  background: linear-gradient(90deg, rgba(196, 149, 106, 0.2) 0%, rgba(196, 149, 106, 0.1) 100%);
+}
+
+.tab-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+}
+
+.tab-item .tab-favicon {
+  width: 16px;
+  height: 16px;
+}
+
+.tab-item .tab-title {
+  flex: 1;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.compare-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.compare-actions .btn-secondary {
+  flex-shrink: 0;
+}
+
+.compare-actions .btn-primary {
+  flex: 1;
+}
+
+/* Selected count badge styling */
+#selected-count {
+  display: inline-block;
+  min-width: 16px;
+  padding: 0 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+/* Empty tabs list state */
+.tabs-list-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.tabs-list-empty-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+/* Progress */
+.progress-container {
+  margin: 16px 0;
+}
+
+.progress-container.hidden {
+  display: none;
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--accent);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.progress-text::before {
+  content: '🐕';
+  display: inline-block;
+  animation: sniff 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes sniff {
+  from { transform: rotate(-5deg) translateX(-2px); }
+  to { transform: rotate(5deg) translateX(2px); }
+}
+
+/* Results Section */
+.results-section {
+  margin-top: 16px;
+}
+
+.results-section.hidden {
+  display: none;
+}
+
+/* Single Result Card - Legal document style */
+.result-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(45, 37, 34, 0.08);
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--card) 100%);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.result-url {
+  font-size: 12px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.result-score {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.score-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.score-excellent {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid var(--success);
+}
+
+.score-good {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  border: 1px solid var(--warning);
+}
+
+.score-fair {
+  background: #FFF0E0;
+  color: #8B5A2B;
+  border: 1px solid #C4956A;
+}
+
+.score-poor {
+  background: var(--error-bg);
+  color: var(--error-text);
+  border: 1px solid var(--error);
+}
+
+.result-body {
+  padding: 12px 16px;
+}
+
+/* Compliance Items - Checklist style */
+.compliance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compliance-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--background);
+  border-radius: 4px;
+  border-left: 3px solid var(--card-border);
+  transition: all 0.15s ease;
+}
+
+.compliance-item.found {
+  background: var(--success-bg);
+  border-left-color: var(--success);
+}
+
+.compliance-item.not-found {
+  background: var(--background);
+  border-left-color: var(--text-muted);
+}
+
+.compliance-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.compliance-status {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.compliance-status.found {
+  color: var(--success-text);
+}
+
+.compliance-status.not-found {
+  color: var(--text-muted);
+}
+
+.status-icon {
+  font-size: 14px;
+}
+
+.compliance-link {
+  font-size: 11px;
+  color: var(--primary);
+  text-decoration: none;
+  display: block;
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.compliance-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Compare Results - Card-based layout */
+.compare-results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.compare-results-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+/* Individual site card in comparison */
+.compare-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.compare-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--card) 100%);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.compare-card-site {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+
+.compare-card-score {
+  flex-shrink: 0;
+}
+
+.compare-card-body {
+  padding: 10px 14px;
+}
+
+/* Compliance grid for compare cards */
+.compare-compliance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.compare-compliance-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: var(--background);
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.compare-compliance-item.found {
+  background: var(--success-bg);
+}
+
+.compare-compliance-item .status-icon {
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.compare-compliance-item.found .status-icon {
+  color: var(--success);
+}
+
+.compare-compliance-item.not-found .status-icon {
+  color: var(--text-muted);
+}
+
+.compare-compliance-item .item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+/* Summary bar at bottom of compare */
+.compare-summary {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px;
+  background: var(--accent);
+  border-radius: 6px;
+  margin-top: 8px;
+}
+
+.compare-summary-item {
+  text-align: center;
+}
+
+.compare-summary-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.compare-summary-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Legacy table styles (fallback) */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.compare-table th {
+  background: var(--accent);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  color: var(--text-primary);
+}
+
+.compare-table td.found {
+  color: var(--success-text);
+}
+
+.compare-table td.not-found {
+  color: var(--error);
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 2px solid var(--accent);
+}
+
+/* History View */
+.history-view {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 3px solid var(--secondary);
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.history-item:hover {
+  background: var(--accent);
+  border-left-color: var(--primary);
+}
+
+.history-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.history-url {
+  font-size: 12px;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-date {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.history-score {
+  flex-shrink: 0;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.empty-state-text {
+  font-size: 13px;
+}
+
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
+
+/* Scrollbar Styling - Warm tones */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
+
+
+/* ========================================
+   Training Panel Styles
+   ======================================== */
+
+.training-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--background);
+  z-index: 100;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.training-panel.visible {
+  transform: translateX(0);
+}
+
+.training-panel.hidden {
+  display: block !important;
+  transform: translateX(100%);
+}
+
+.training-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(180deg, var(--card) 0%, var(--accent) 100%);
+  border-bottom: 2px solid var(--secondary);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.training-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary);
+  font-family: 'Georgia', serif;
+  margin: 0;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.btn-back:hover {
+  background: var(--accent);
+}
+
+.training-content {
+  padding: 16px;
+}
+
+.training-intro {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.training-section {
+  margin-bottom: 24px;
+}
+
+.training-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--card-border);
+  font-family: 'Georgia', serif;
+}
+
+.training-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.training-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Individual training item */
+.training-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.training-item:hover {
+  border-color: var(--secondary);
+}
+
+.training-item.disabled {
+  opacity: 0.5;
+}
+
+.training-item-toggle {
+  flex-shrink: 0;
+}
+
+.training-item-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.training-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.training-item-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.training-item-keywords {
+  font-size: 10px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.training-item-weight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.weight-input {
+  width: 50px;
+  padding: 4px 6px;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.weight-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.weight-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.training-item-delete {
+  background: none;
+  border: none;
+  color: var(--error);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+
+.training-item-delete:hover {
+  opacity: 1;
+  background: var(--error-bg);
+}
+
+/* Add custom item button */
+.add-custom-btn {
+  width: 100%;
+  margin-top: 8px;
+  border-style: dashed;
+}
+
+/* Custom item form */
+.custom-form {
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--secondary);
+  border-radius: 6px;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  font-size: 13px;
+  margin-bottom: 8px;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.custom-input::placeholder {
+  color: var(--text-muted);
+}
+
+.custom-form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Reset section */
+.training-reset {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+}
+
+.reset-btn {
+  color: var(--text-secondary) !important;
+}
+
+.reset-btn:hover {
+  color: var(--primary) !important;
+}
+
+.reset-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Body when panel is open */
+body {
+  position: relative;
+  overflow: hidden;
+}
+

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSCAR Options - Train Oscar</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header class="page-header">
+      <div class="header-content">
+        <img src="../icons/icon48.png" alt="OSCAR" class="header-icon">
+        <div class="header-text">
+          <h1>Train Oscar</h1>
+          <p class="subtitle">Customize what Oscar sniffs out</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <p class="intro">
+        Teach Oscar what to look for! Enable or disable compliance items, adjust their importance weights, or add your own custom searches. Items are organized by category - click a category header to expand or collapse it.
+      </p>
+
+      <!-- Score Preview Panel -->
+      <section class="section score-preview-section">
+        <div class="score-preview-header">
+          <div class="oscar-mood">
+            <span class="oscar-face" id="oscar-face">🐕</span>
+            <span class="oscar-speech" id="oscar-speech">Ready to sniff!</span>
+          </div>
+          <div class="score-preview-title">
+            <h2 class="section-title">
+              <span class="section-icon">📊</span>
+              Oscar's Sniff-O-Meter
+            </h2>
+            <p class="score-preview-subtitle">See how your settings affect scoring</p>
+          </div>
+        </div>
+
+        <!-- Overall Score Bar -->
+        <div class="score-overview">
+          <div class="score-total-container">
+            <div class="score-label-row">
+              <span class="score-label">Active Sniff Power</span>
+              <span class="score-value" id="total-weight">0</span>
+              <span class="score-max">/ <span id="max-weight">0</span> points possible</span>
+            </div>
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-fill" id="total-bar"></div>
+              </div>
+              <div class="score-percentage" id="score-percentage">0%</div>
+            </div>
+          </div>
+          <div class="enabled-count">
+            <span class="enabled-number" id="enabled-count">0</span>
+            <span class="enabled-label">checks enabled</span>
+          </div>
+        </div>
+
+        <!-- Category Breakdown -->
+        <div class="category-breakdown" id="category-breakdown">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Score Impact Hints -->
+        <div class="score-hints" id="score-hints">
+          <div class="hint-item hint-top">
+            <span class="hint-icon">⭐</span>
+            <span class="hint-text" id="top-category">-</span>
+          </div>
+          <div class="hint-item hint-tip">
+            <span class="hint-icon">💡</span>
+            <span class="hint-text" id="score-tip">Enable more checks to increase coverage</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Built-in Items by Category -->
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🔍</span>
+          Compliance Categories
+        </h2>
+        <p class="section-description">
+          Oscar's built-in compliance checks, organized by type. Toggle items on/off and adjust their weight (importance) in the overall score. Disabled items won't be scanned.
+        </p>
+        <div id="builtin-items" class="training-categories">
+          <!-- Populated by JS with category sections -->
+        </div>
+      </section>
+
+      <!-- Custom Items -->
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">✨</span>
+          Custom Searches
+        </h2>
+        <p class="section-description">
+          Add your own terms for Oscar to look for. Great for industry-specific requirements or company-specific policies.
+        </p>
+        <div id="custom-items" class="training-items">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Add Custom Item Form -->
+        <div class="add-custom-section">
+          <button id="show-add-form" class="btn btn-secondary">
+            <span>+</span> Add Custom Search
+          </button>
+
+          <div id="custom-item-form" class="custom-form hidden">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="custom-item-name">Display Name</label>
+                <input type="text" id="custom-item-name" placeholder="e.g., Accessibility Statement" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="custom-item-weight">Weight</label>
+                <input type="number" id="custom-item-weight" value="5" min="1" max="100" class="form-input form-input-small">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="custom-item-keywords">Search Keywords (comma separated)</label>
+              <input type="text" id="custom-item-keywords" placeholder="e.g., accessibility, a11y, wcag" class="form-input">
+            </div>
+            <div class="form-actions">
+              <button id="save-custom-item" class="btn btn-primary">Add Search</button>
+              <button id="cancel-custom-item" class="btn btn-secondary">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reset Section -->
+      <section class="section reset-section">
+        <div class="reset-content">
+          <div class="reset-info">
+            <h3>🐕 Restore Puppy Settings</h3>
+            <p>Reset all items to Oscar's original training. This will remove custom searches and restore default weights.</p>
+          </div>
+          <button id="reset-training" class="btn btn-danger">Reset to Defaults</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Save indicator -->
+    <div id="save-indicator" class="save-indicator hidden">
+      <span class="save-icon">✓</span> Settings saved
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

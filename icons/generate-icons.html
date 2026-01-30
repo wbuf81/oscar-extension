@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Icons</title>
+</head>
+<body>
+  <h3>Right-click each canvas and save as PNG</h3>
+  <p>icon16.png:</p>
+  <canvas id="c16" width="16" height="16"></canvas>
+  <p>icon32.png:</p>
+  <canvas id="c32" width="32" height="32"></canvas>
+  <p>icon48.png:</p>
+  <canvas id="c48" width="48" height="48"></canvas>
+  <p>icon128.png:</p>
+  <canvas id="c128" width="128" height="128"></canvas>
+  
+  <script>
+    function drawIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      const padding = size * 0.1;
+      const radius = size * 0.15;
+      
+      // Background
+      ctx.fillStyle = '#4361ee';
+      ctx.beginPath();
+      ctx.roundRect(0, 0, size, size, radius);
+      ctx.fill();
+      
+      // Shield shape
+      ctx.fillStyle = '#ffffff';
+      const shieldWidth = size * 0.6;
+      const shieldHeight = size * 0.7;
+      const shieldX = (size - shieldWidth) / 2;
+      const shieldY = size * 0.15;
+      
+      ctx.beginPath();
+      ctx.moveTo(shieldX + shieldWidth / 2, shieldY);
+      ctx.lineTo(shieldX + shieldWidth, shieldY + shieldHeight * 0.3);
+      ctx.lineTo(shieldX + shieldWidth, shieldY + shieldHeight * 0.6);
+      ctx.quadraticCurveTo(shieldX + shieldWidth / 2, shieldY + shieldHeight, shieldX + shieldWidth / 2, shieldY + shieldHeight);
+      ctx.quadraticCurveTo(shieldX + shieldWidth / 2, shieldY + shieldHeight, shieldX, shieldY + shieldHeight * 0.6);
+      ctx.lineTo(shieldX, shieldY + shieldHeight * 0.3);
+      ctx.closePath();
+      ctx.fill();
+      
+      // Checkmark
+      ctx.strokeStyle = '#4361ee';
+      ctx.lineWidth = size * 0.08;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      const checkX = size * 0.32;
+      const checkY = size * 0.5;
+      ctx.moveTo(checkX, checkY);
+      ctx.lineTo(checkX + size * 0.12, checkY + size * 0.12);
+      ctx.lineTo(checkX + size * 0.32, checkY - size * 0.12);
+      ctx.stroke();
+    }
+    
+    drawIcon(document.getElementById('c16'), 16);
+    drawIcon(document.getElementById('c32'), 32);
+    drawIcon(document.getElementById('c48'), 48);
+    drawIcon(document.getElementById('c128'), 128);
+  </script>
+</body>
+</html>
