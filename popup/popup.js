@@ -39,6 +39,7 @@ const progressFill = document.querySelector('.progress-fill');
 const progressText = document.querySelector('.progress-text');
 const resultsSection = document.getElementById('results-section');
 const clearResultsBtn = document.getElementById('clear-results');
+const copyResultsBtn = document.getElementById('copy-results');
 const openAboutBtn = document.getElementById('open-about');
 const openHistoryBtn = document.getElementById('open-history');
 const openOptionsBtn = document.getElementById('open-options');
@@ -47,6 +48,11 @@ const quickStats = document.getElementById('quick-stats');
 const statScans = document.getElementById('stat-scans');
 const statAvg = document.getElementById('stat-avg');
 const statSites = document.getElementById('stat-sites');
+const deepScanContainer = document.getElementById('deep-scan-container');
+const deepScanToggle = document.getElementById('deep-scan-toggle');
+const deepScanOptions = document.getElementById('deep-scan-options');
+const deepScanDocsList = document.getElementById('deep-scan-docs-list');
+const deepScanStartBtn = document.getElementById('deep-scan-start');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', init);
@@ -107,8 +113,11 @@ function setupEventListeners() {
   scanSelectedBtn.addEventListener('click', scanSelectedTabs);
   selectAllBtn.addEventListener('click', toggleSelectAll);
 
-  // Clear results
+  // Clear / Copy results
   clearResultsBtn.addEventListener('click', clearResults);
+  if (copyResultsBtn) {
+    copyResultsBtn.addEventListener('click', copyResultsToClipboard);
+  }
 
   // Header icon click - go to About page
   if (headerIcon) {
@@ -140,6 +149,14 @@ function setupEventListeners() {
   const forceCookieBannerBtn = document.getElementById('force-cookie-banner');
   if (forceCookieBannerBtn) {
     forceCookieBannerBtn.addEventListener('click', forceCookieBanner);
+  }
+
+  // Deep Scan toggle and start buttons
+  if (deepScanToggle) {
+    deepScanToggle.addEventListener('click', toggleDeepScanOptions);
+  }
+  if (deepScanStartBtn) {
+    deepScanStartBtn.addEventListener('click', performDeepScan);
   }
 }
 
@@ -377,6 +394,40 @@ function getScoreLabel(score) {
 // Results Rendering
 // ========================================
 
+// ========================================
+// Compliance Descriptions for Tooltips
+// ========================================
+
+const COMPLIANCE_DESCRIPTIONS = {
+  privacyPolicy: { desc: 'Explains how a site collects, uses, and protects personal information.', reg: 'GDPR, CCPA' },
+  doNotSell: { desc: 'Lets users opt out of the sale of their personal data.', reg: 'CCPA/CPRA' },
+  dataRequest: { desc: 'Provides a way for users to access, download, or delete their personal data.', reg: 'GDPR, CCPA' },
+  cookieBanner: { desc: 'Asks for informed consent before placing non-essential tracking cookies.', reg: 'EU ePrivacy Directive, GDPR' },
+  cookiePolicy: { desc: 'Details what cookies are used, their purposes, and retention periods.', reg: 'GDPR' },
+  cookieSettings: { desc: 'Lets users manage or withdraw cookie consent at any time.', reg: 'GDPR, ePrivacy' },
+  termsOfService: { desc: 'The legal contract defining acceptable use, liability, and user rights.', reg: 'General contract law' },
+  legal: { desc: 'Identifies the site operator with contact and business registration info.', reg: 'EU Impressum laws' },
+  dispute: { desc: 'Informs consumers about available dispute resolution mechanisms.', reg: 'EU ODR Regulation' },
+  contact: { desc: 'Provides users a way to reach the business behind the site.', reg: 'EU Consumer Rights Directive' },
+  refundPolicy: { desc: 'Explains how customers can return products and receive refunds.', reg: 'FTC, EU Consumer Rights Directive' },
+  shippingPolicy: { desc: 'States shipping costs, delivery times, and available methods.', reg: 'Consumer protection laws' },
+  ageVerification: { desc: 'Verifies user age for restricted content or data from children.', reg: 'COPPA' },
+  accessibility: { desc: 'Documents accessibility features and how to request accommodations.', reg: 'ADA, EU Accessibility Act' },
+  sitemap: { desc: 'Helps users and screen readers navigate the site structure.', reg: 'Best practice' },
+  dmca: { desc: 'Provides takedown procedures for infringing content, granting safe harbor.', reg: 'DMCA' },
+  reportAbuse: { desc: 'Offers a mechanism for reporting illegal or harmful content.', reg: 'EU Digital Services Act' },
+  affiliateDisclosure: { desc: 'Discloses compensation received for endorsements or affiliate links.', reg: 'FTC Guidelines' },
+  adChoices: { desc: 'Provides transparency about interest-based ads and opt-out options.', reg: 'DAA, NAI' },
+  modernSlavery: { desc: 'Details steps taken to prevent slavery in the business or supply chain.', reg: 'UK Modern Slavery Act' },
+  sustainability: { desc: 'Reports on environmental impact, carbon footprint, and green initiatives.', reg: 'EU CSRD' },
+  securityPolicy: { desc: 'Provides a channel for reporting vulnerabilities responsibly.', reg: 'CISA guidelines' },
+  whoisRdap: { desc: 'Lookup service for domain registration and ownership data.', reg: 'ICANN RDAP requirement' },
+  domainAbuse: { desc: 'Published abuse contact info for investigating domain abuse reports.', reg: 'ICANN RAA Section 3.18' },
+  udrp: { desc: 'Mandatory arbitration process for domain name cybersquatting disputes.', reg: 'ICANN UDRP' },
+  registrarInfo: { desc: 'Details about the ICANN-accredited registrar managing the domain.', reg: 'ICANN RAA' },
+  transferPolicy: { desc: 'Explains how domains move between registrars with auth codes and locks.', reg: 'ICANN Transfer Policy' }
+};
+
 // Oscar moods for different score ranges
 const oscarResultMoods = {
   poor: {
@@ -428,6 +479,7 @@ const RESULT_CATEGORIES = {
 function renderSingleResult(result) {
   resultsSection.classList.remove('hidden');
   clearResultsBtn.classList.remove('hidden');
+  if (copyResultsBtn) copyResultsBtn.classList.remove('hidden');
 
   const hostname = new URL(result.url).hostname;
   const labels = getComplianceLabels();
@@ -477,6 +529,9 @@ function renderSingleResult(result) {
         </div>
       </div>
 
+      <!-- Deep Scan Summary (if performed) -->
+      ${renderDeepScanSummary(result)}
+
       <!-- Compliance Items List -->
       <div class="result-compliance-section">
         <div class="result-compliance-title">Compliance Items</div>
@@ -496,6 +551,9 @@ function renderSingleResult(result) {
     oscarFace.classList.add('celebrating');
     setTimeout(() => oscarFace.classList.remove('celebrating'), 1000);
   }
+
+  // Check deep scan eligibility and update button
+  updateDeepScanButton(result);
 }
 
 function calculateComplianceStats(compliance, labels) {
@@ -614,23 +672,109 @@ function renderComplianceItems(compliance, labels) {
   return order.map(key => {
     const item = compliance[key];
     const found = typeof item === 'boolean' ? item : (item && item.found);
-    const url = item?.url;
+    const url = item?.url || item?.documentUrl;
     const text = item?.text;
     const label = labels[key] || key;
 
+    // Check if consent was previously given (for cookie banner)
+    const consentGiven = item?.details?.consentGiven;
+    // Check if found via deep scan
+    const foundInDocument = item?.foundInDocument;
+    const isDeepScan = item?.deepScan === true;
+
+    let statusText = 'Not Found';
+    if (found) {
+      if (foundInDocument) {
+        statusText = `Found in ${foundInDocument}`;
+      } else if (consentGiven) {
+        statusText = 'Found (consent given)';
+      } else {
+        statusText = 'Found';
+      }
+    }
+
+    // Generate tooltip for deep scan items
+    const matchedTextTooltip = item?.matchedText ? `title="${escapeHtml(item.matchedText)}"` : '';
+
+    // "What's This?" info tooltip
+    const descData = COMPLIANCE_DESCRIPTIONS[key];
+    const infoTooltip = descData ? `
+      <span class="compliance-info-trigger" tabindex="0">
+        <span class="compliance-info-icon">i</span>
+        <span class="compliance-tooltip">${escapeHtml(descData.desc)}<br><em>${escapeHtml(descData.reg)}</em></span>
+      </span>` : '';
+
     return `
-      <div class="compliance-item ${found ? 'found' : 'not-found'}">
+      <div class="compliance-item ${found ? 'found' : 'not-found'}${isDeepScan ? ' deep-scan-found' : ''}">
         <div>
-          <span class="compliance-name">${label}</span>
+          <span class="compliance-name">${label}</span>${infoTooltip}
           ${found && url ? `<a href="${url}" target="_blank" class="compliance-link" title="${text || url}">${text || 'View'}</a>` : ''}
         </div>
-        <span class="compliance-status ${found ? 'found' : 'not-found'}">
-          <span class="status-icon">${found ? '&#10003;' : '&#10007;'}</span>
-          ${found ? 'Found' : 'Not Found'}
+        <span class="compliance-status ${found ? 'found' : 'not-found'}${consentGiven ? ' consent-given' : ''}${isDeepScan ? ' deep-scan' : ''}" ${matchedTextTooltip}>
+          <span class="status-icon">${found ? (isDeepScan ? '📄' : '&#10003;') : '&#10007;'}</span>
+          ${statusText}
         </span>
       </div>
     `;
   }).join('');
+}
+
+// Escape HTML for safe insertion
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Render deep scan summary if performed
+function renderDeepScanSummary(result) {
+  if (!result.deepScanResults || !result.deepScanResults.performed) {
+    return '';
+  }
+
+  const { scannedDocuments, itemsFound, errors } = result.deepScanResults;
+
+  if (scannedDocuments.length === 0) {
+    return '';
+  }
+
+  const documentLabels = {
+    termsOfService: 'Terms of Service',
+    privacyPolicy: 'Privacy Policy',
+    legal: 'Legal Page',
+    cookiePolicy: 'Cookie Policy'
+  };
+
+  const scannedList = scannedDocuments
+    .map(doc => documentLabels[doc] || doc)
+    .join(', ');
+
+  const hasErrors = errors && errors.length > 0;
+
+  return `
+    <div class="deep-scan-summary">
+      <div class="deep-scan-header">
+        <span class="deep-scan-icon">📄</span>
+        <span class="deep-scan-title">Deep Scan Complete</span>
+      </div>
+      <div class="deep-scan-details">
+        <div class="deep-scan-stat">
+          <span class="deep-scan-stat-label">Documents Scanned:</span>
+          <span class="deep-scan-stat-value">${scannedList}</span>
+        </div>
+        <div class="deep-scan-stat">
+          <span class="deep-scan-stat-label">Items Found:</span>
+          <span class="deep-scan-stat-value ${itemsFound.length > 0 ? 'success' : ''}">${itemsFound.length}</span>
+        </div>
+        ${hasErrors ? `
+          <div class="deep-scan-errors">
+            <span class="deep-scan-error-icon">⚠️</span>
+            ${errors.length} document${errors.length > 1 ? 's' : ''} could not be scanned
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `;
 }
 
 function renderCompareResults(results) {
@@ -641,6 +785,7 @@ function renderCompareResults(results) {
 
   resultsSection.classList.remove('hidden');
   clearResultsBtn.classList.remove('hidden');
+  if (copyResultsBtn) copyResultsBtn.classList.remove('hidden');
 
   const labels = getComplianceLabels();
 
@@ -784,6 +929,7 @@ function clearResults() {
   resultsSection.classList.add('hidden');
   resultsSection.innerHTML = '';
   clearResultsBtn.classList.add('hidden');
+  if (copyResultsBtn) copyResultsBtn.classList.add('hidden');
   scanResults = null;
 }
 
@@ -1235,5 +1381,323 @@ function showCookieToast(message, type = 'success') {
     toast.classList.remove('visible');
     setTimeout(() => toast.remove(), 300);
   }, 3000);
+}
+
+// ========================================
+// Copy Results to Clipboard
+// ========================================
+
+async function copyResultsToClipboard() {
+  if (!scanResults || scanResults.length === 0) return;
+
+  const labels = getComplianceLabels();
+  const version = chrome.runtime.getManifest().version;
+  let text = '';
+
+  if (scanResults.length === 1) {
+    // Single result
+    const result = scanResults[0];
+    const hostname = new URL(result.url).hostname;
+    const date = new Date(result.scannedAt).toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric'
+    });
+
+    text += `# OSCAR Compliance Report\n`;
+    text += `**Site:** ${hostname}\n`;
+    text += `**Score:** ${result.score}% (${getScoreLabel(result.score)})\n`;
+    text += `**Date:** ${date}\n\n`;
+    text += `## Compliance Checklist\n`;
+
+    for (const [key, value] of Object.entries(result.compliance)) {
+      const found = typeof value === 'boolean' ? value : (value && value.found);
+      const label = labels[key] || key;
+      text += `- [${found ? 'x' : ' '}] ${label}\n`;
+    }
+  } else {
+    // Compare mode
+    const avgScore = Math.round(scanResults.reduce((sum, r) => sum + r.score, 0) / scanResults.length);
+    text += `# OSCAR Comparison Report\n`;
+    text += `**Sites compared:** ${scanResults.length}\n`;
+    text += `**Average score:** ${avgScore}%\n\n`;
+
+    for (const result of scanResults) {
+      const hostname = new URL(result.url).hostname;
+      const date = new Date(result.scannedAt).toLocaleDateString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric'
+      });
+
+      text += `## ${hostname} — ${result.score}% (${getScoreLabel(result.score)})\n`;
+      text += `**Date:** ${date}\n`;
+
+      for (const [key, value] of Object.entries(result.compliance)) {
+        const found = typeof value === 'boolean' ? value : (value && value.found);
+        const label = labels[key] || key;
+        text += `- [${found ? 'x' : ' '}] ${label}\n`;
+      }
+      text += '\n';
+    }
+  }
+
+  text += `\n---\nGenerated by OSCAR v${version}\n`;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showCookieToast('Results copied to clipboard!', 'success');
+  } catch (err) {
+    showCookieToast('Failed to copy results', 'error');
+  }
+}
+
+// ========================================
+// Deep Scan
+// ========================================
+
+// Document labels for display (all compliance items that could have URLs)
+const DOCUMENT_LABELS = {
+  // Privacy & Data Protection
+  privacyPolicy: 'Privacy Policy',
+  doNotSell: 'Do Not Sell (CCPA)',
+  dataRequest: 'Data Request',
+  // Cookie Compliance
+  cookiePolicy: 'Cookie Policy',
+  cookieSettings: 'Cookie Settings',
+  // Legal Disclosures
+  termsOfService: 'Terms of Service',
+  legal: 'Legal Page',
+  dispute: 'Dispute Resolution',
+  contact: 'Contact',
+  // Consumer Protection
+  refundPolicy: 'Refund Policy',
+  shippingPolicy: 'Shipping Policy',
+  ageVerification: 'Age Verification',
+  // Accessibility
+  accessibility: 'Accessibility',
+  sitemap: 'Sitemap',
+  // Content & IP
+  dmca: 'DMCA / Copyright',
+  reportAbuse: 'Report Abuse',
+  affiliateDisclosure: 'Affiliate Disclosure',
+  adChoices: 'Ad Choices',
+  // Corporate Responsibility
+  modernSlavery: 'Modern Slavery',
+  sustainability: 'Sustainability',
+  securityPolicy: 'Security Policy',
+  // ICANN & Registry
+  whoisRdap: 'WHOIS / RDAP',
+  domainAbuse: 'Domain Abuse',
+  udrp: 'UDRP / Disputes',
+  registrarInfo: 'Registrar Info',
+  transferPolicy: 'Transfer Policy'
+};
+
+function checkDeepScanEligibility(result) {
+  // Check if we have document links to scan
+  const hasDocumentLinks = result.documentLinks &&
+    Object.keys(result.documentLinks).length > 0;
+
+  if (!hasDocumentLinks) {
+    return { eligible: false, reason: 'No document links found' };
+  }
+
+  // Check if there are missing compliance items that could be found via deep scan
+  const deepScanPatternKeys = ['dmca', 'dispute', 'reportAbuse', 'doNotSell', 'dataRequest', 'accessibility'];
+  const missingItems = [];
+
+  for (const key of deepScanPatternKeys) {
+    const item = result.compliance[key];
+    const found = typeof item === 'boolean' ? item : (item && item.found);
+    if (!found) {
+      missingItems.push(key);
+    }
+  }
+
+  if (missingItems.length === 0) {
+    return { eligible: false, reason: 'All scannable items already found' };
+  }
+
+  return {
+    eligible: true,
+    documentLinks: result.documentLinks,
+    documentCount: Object.keys(result.documentLinks).length,
+    missingCount: missingItems.length
+  };
+}
+
+function resetDeepScanUI() {
+  if (!deepScanContainer) return;
+
+  // Reset all button states
+  if (deepScanToggle) {
+    deepScanToggle.disabled = false;
+    deepScanToggle.classList.remove('loading');
+  }
+  if (deepScanStartBtn) {
+    deepScanStartBtn.disabled = false;
+    deepScanStartBtn.classList.remove('loading');
+  }
+  if (deepScanOptions) {
+    deepScanOptions.classList.add('hidden');
+  }
+  if (deepScanToggle) {
+    const caret = deepScanToggle.querySelector('.btn-caret');
+    if (caret) caret.textContent = '▼';
+  }
+}
+
+function updateDeepScanButton(result) {
+  if (!deepScanContainer) return;
+
+  // Always reset UI state first
+  resetDeepScanUI();
+
+  const eligibility = checkDeepScanEligibility(result);
+
+  if (eligibility.eligible) {
+    deepScanContainer.classList.remove('hidden');
+
+    // Update button text
+    const docCount = eligibility.documentCount;
+    deepScanToggle.querySelector('.btn-text').textContent =
+      `Deep Scan ${docCount} Document${docCount > 1 ? 's' : ''}`;
+
+    // Populate document checkboxes
+    populateDocumentList(eligibility.documentLinks);
+
+    // Collapse options by default
+    deepScanOptions.classList.add('hidden');
+    deepScanToggle.querySelector('.btn-caret').textContent = '▼';
+  } else {
+    deepScanContainer.classList.add('hidden');
+  }
+}
+
+function populateDocumentList(documentLinks) {
+  if (!deepScanDocsList) return;
+
+  deepScanDocsList.innerHTML = '';
+
+  for (const [key, url] of Object.entries(documentLinks)) {
+    const label = DOCUMENT_LABELS[key] || key;
+    const hostname = new URL(url).hostname;
+
+    const docItem = document.createElement('label');
+    docItem.className = 'deep-scan-doc-item';
+    docItem.innerHTML = `
+      <input type="checkbox" name="deep-scan-doc" value="${key}" data-url="${escapeHtml(url)}" checked>
+      <span class="deep-scan-doc-icon">📄</span>
+      <span class="deep-scan-doc-info">
+        <span class="deep-scan-doc-label">${label}</span>
+        <span class="deep-scan-doc-url" title="${escapeHtml(url)}">${hostname}</span>
+      </span>
+    `;
+
+    deepScanDocsList.appendChild(docItem);
+  }
+
+  updateDeepScanStartButton();
+
+  // Add change listeners to checkboxes
+  deepScanDocsList.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', updateDeepScanStartButton);
+  });
+}
+
+function updateDeepScanStartButton() {
+  if (!deepScanStartBtn || !deepScanDocsList) return;
+
+  const checkedCount = deepScanDocsList.querySelectorAll('input[type="checkbox"]:checked').length;
+  deepScanStartBtn.disabled = checkedCount === 0;
+  deepScanStartBtn.querySelector('.btn-text').textContent =
+    checkedCount === 0 ? 'Select Documents' : `Scan ${checkedCount} Selected`;
+}
+
+function toggleDeepScanOptions() {
+  if (!deepScanOptions || !deepScanToggle) return;
+
+  const isHidden = deepScanOptions.classList.contains('hidden');
+  deepScanOptions.classList.toggle('hidden');
+  deepScanToggle.querySelector('.btn-caret').textContent = isHidden ? '▲' : '▼';
+}
+
+function getSelectedDocuments() {
+  if (!deepScanDocsList) return {};
+
+  const selected = {};
+  deepScanDocsList.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+    selected[cb.value] = cb.dataset.url;
+  });
+  return selected;
+}
+
+async function performDeepScan() {
+  if (!scanResults || scanResults.length === 0 || isScanning) return;
+
+  const currentResult = scanResults[0];
+  const selectedDocs = getSelectedDocuments();
+
+  if (Object.keys(selectedDocs).length === 0) {
+    showCookieToast('No documents selected', 'error');
+    return;
+  }
+
+  // Update buttons to show progress
+  deepScanStartBtn.disabled = true;
+  deepScanStartBtn.classList.add('loading');
+  deepScanToggle.disabled = true;
+  const originalText = deepScanStartBtn.querySelector('.btn-text').textContent;
+  deepScanStartBtn.querySelector('.btn-text').textContent = 'Scanning...';
+
+  showProgress('Oscar is reading the fine print...');
+
+  try {
+    // Create a modified result with only selected documents
+    const modifiedResult = {
+      ...currentResult,
+      documentLinks: selectedDocs
+    };
+
+    const response = await chrome.runtime.sendMessage({
+      action: 'deepScanTab',
+      initialResults: modifiedResult
+    });
+
+    if (response.success) {
+      // Update scan results with deep scan findings
+      scanResults = [response.data];
+
+      // Re-render results
+      renderSingleResult(response.data);
+
+      // Update badge
+      chrome.runtime.sendMessage({
+        action: 'updateBadge',
+        score: response.data.score
+      });
+
+      // Show success message
+      const itemsFound = response.data.deepScanResults?.itemsFound || [];
+      if (itemsFound.length > 0) {
+        showCookieToast(`Found ${itemsFound.length} item${itemsFound.length > 1 ? 's' : ''} in documents!`, 'success');
+      } else {
+        showCookieToast('No additional items found', 'warning');
+      }
+
+      // Hide deep scan container since scan is complete
+      deepScanContainer.classList.add('hidden');
+    } else {
+      showCookieToast(response.error || 'Deep scan failed', 'error');
+      deepScanStartBtn.disabled = false;
+      deepScanToggle.disabled = false;
+      deepScanStartBtn.querySelector('.btn-text').textContent = originalText;
+    }
+  } catch (error) {
+    showCookieToast('Deep scan error: ' + error.message, 'error');
+    deepScanStartBtn.disabled = false;
+    deepScanToggle.disabled = false;
+    deepScanStartBtn.querySelector('.btn-text').textContent = originalText;
+  } finally {
+    deepScanStartBtn.classList.remove('loading');
+    hideProgress();
+  }
 }
 

@@ -77,6 +77,149 @@
       de: ['verkaufen oder teilen sie meine daten nicht', 'nicht verkaufen', 'nicht teilen', 'verkaufen sie meine daten nicht', 'datenschutzoptionen'],
       nl: ['verkoop of deel mijn gegevens niet', 'niet verkopen', 'niet delen', 'verkoop mijn gegevens niet', 'privacykeuzes'],
       pt: ['não venda ou compartilhe minhas informações pessoais', 'não vender', 'não compartilhar', 'não venda minhas informações pessoais', 'opções de privacidade']
+    },
+    // Privacy & Data Protection (additional)
+    dataRequest: {
+      en: ['data subject request', 'dsar', 'access my data', 'request my data', 'download my data', 'data access request', 'right to access', 'data request', 'request your data', 'access your data', 'download your data', 'data portability', 'export my data'],
+      es: ['solicitud de acceso a datos', 'acceder a mis datos', 'descargar mis datos', 'solicitud de datos', 'derecho de acceso'],
+      fr: ['demande d\'accès aux données', 'accéder à mes données', 'télécharger mes données', 'droit d\'accès', 'portabilité des données'],
+      de: ['auskunftsrecht', 'datenzugang', 'meine daten anfordern', 'daten herunterladen', 'datenportabilität'],
+      nl: ['gegevensverzoek', 'toegang tot mijn gegevens', 'download mijn gegevens', 'recht op inzage'],
+      pt: ['solicitação de dados', 'acessar meus dados', 'baixar meus dados', 'direito de acesso']
+    },
+    // Legal (additional)
+    contact: {
+      en: ['contact us', 'contact information', 'get in touch', 'reach us', 'contact details', 'how to contact'],
+      es: ['contáctenos', 'contacto', 'información de contacto', 'ponerse en contacto'],
+      fr: ['contactez-nous', 'nous contacter', 'coordonnées', 'informations de contact'],
+      de: ['kontakt', 'kontaktieren sie uns', 'kontaktinformationen'],
+      nl: ['contact', 'neem contact op', 'contactgegevens'],
+      pt: ['contate-nos', 'fale conosco', 'informações de contato', 'entre em contato']
+    },
+    // Consumer Protection
+    refundPolicy: {
+      en: ['refund policy', 'return policy', 'returns', 'refunds', 'money back', 'cancellation policy', 'return and refund', 'returns & refunds', 'exchange policy'],
+      es: ['política de devolución', 'política de reembolso', 'devoluciones', 'reembolsos', 'política de cancelación'],
+      fr: ['politique de remboursement', 'politique de retour', 'retours', 'remboursements', 'politique d\'annulation'],
+      de: ['rückgaberecht', 'erstattungsrichtlinie', 'rückgabe', 'widerrufsrecht', 'stornierungsrichtlinie'],
+      nl: ['retourbeleid', 'restitutiebeleid', 'retourneren', 'terugbetalingen'],
+      pt: ['política de devolução', 'política de reembolso', 'devoluções', 'reembolsos']
+    },
+    shippingPolicy: {
+      en: ['shipping policy', 'shipping information', 'delivery policy', 'delivery information', 'shipping & delivery', 'shipping rates'],
+      es: ['política de envío', 'información de envío', 'política de entrega', 'información de entrega'],
+      fr: ['politique de livraison', 'informations de livraison', 'politique d\'expédition'],
+      de: ['versandrichtlinie', 'versandinformationen', 'lieferinformationen', 'lieferbedingungen'],
+      nl: ['verzendbeleid', 'verzendinformatie', 'leveringsinformatie', 'bezorginformatie'],
+      pt: ['política de envio', 'informações de envio', 'política de entrega']
+    },
+    ageVerification: {
+      en: ['age verification', 'age gate', 'must be 18', 'must be 21', 'verify your age', 'coppa', 'children\'s privacy', 'age restricted', 'adults only', 'parental consent'],
+      es: ['verificación de edad', 'mayores de 18', 'mayores de 21', 'privacidad de menores'],
+      fr: ['vérification de l\'âge', 'réservé aux adultes', 'plus de 18 ans', 'confidentialité des enfants'],
+      de: ['altersverifikation', 'altersüberprüfung', 'ab 18', 'jugendschutz'],
+      nl: ['leeftijdsverificatie', '18+', 'alleen voor volwassenen'],
+      pt: ['verificação de idade', 'maiores de 18', 'privacidade infantil']
+    },
+    // Accessibility
+    accessibility: {
+      en: ['accessibility', 'accessibility statement', 'wcag', 'ada compliance', 'a11y', 'screen reader', 'accessibility policy', 'accessible', 'accessibility help'],
+      es: ['accesibilidad', 'declaración de accesibilidad', 'cumplimiento ada'],
+      fr: ['accessibilité', 'déclaration d\'accessibilité', 'politique d\'accessibilité'],
+      de: ['barrierefreiheit', 'erklärung zur barrierefreiheit', 'barrierefreie'],
+      nl: ['toegankelijkheid', 'toegankelijkheidsverklaring', 'toegankelijkheidsbeleid'],
+      pt: ['acessibilidade', 'declaração de acessibilidade', 'política de acessibilidade']
+    },
+    sitemap: {
+      en: ['sitemap', 'site map', 'site index', 'html sitemap'],
+      es: ['mapa del sitio', 'mapa web'],
+      fr: ['plan du site', 'carte du site'],
+      de: ['sitemap', 'seitenübersicht', 'inhaltsverzeichnis'],
+      nl: ['sitemap', 'site-overzicht'],
+      pt: ['mapa do site', 'mapa do website']
+    },
+    // Content & IP (additional)
+    affiliateDisclosure: {
+      en: ['affiliate disclosure', 'affiliate links', 'ftc disclosure', 'sponsored', 'material connection', 'advertising disclosure', 'sponsored content'],
+      es: ['divulgación de afiliados', 'enlaces de afiliados', 'contenido patrocinado'],
+      fr: ['divulgation d\'affiliation', 'liens d\'affiliation', 'contenu sponsorisé'],
+      de: ['affiliate-offenlegung', 'affiliate-links', 'gesponserte inhalte', 'werbung'],
+      nl: ['affiliate disclosure', 'affiliate links', 'gesponsorde inhoud'],
+      pt: ['divulgação de afiliados', 'links de afiliados', 'conteúdo patrocinado']
+    },
+    adChoices: {
+      en: ['ad choices', 'adchoices', 'interest-based ads', 'personalized ads', 'targeted advertising', 'advertising preferences', 'ad preferences'],
+      es: ['opciones de anuncios', 'anuncios personalizados', 'preferencias de publicidad'],
+      fr: ['choix de publicité', 'publicités personnalisées', 'préférences publicitaires'],
+      de: ['anzeigeneinstellungen', 'personalisierte werbung', 'werbeeinstellungen'],
+      nl: ['advertentiekeuzes', 'gepersonaliseerde advertenties', 'advertentievoorkeuren'],
+      pt: ['escolhas de anúncios', 'anúncios personalizados', 'preferências de publicidade']
+    },
+    // Corporate Responsibility
+    modernSlavery: {
+      en: ['modern slavery', 'slavery statement', 'human trafficking', 'supply chain transparency', 'modern slavery statement', 'anti-slavery'],
+      es: ['esclavitud moderna', 'declaración contra la esclavitud', 'tráfico humano'],
+      fr: ['esclavage moderne', 'déclaration sur l\'esclavage', 'traite des êtres humains'],
+      de: ['moderne sklaverei', 'erklärung zur modernen sklaverei', 'menschenhandel'],
+      nl: ['moderne slavernij', 'verklaring moderne slavernij', 'mensenhandel'],
+      pt: ['escravidão moderna', 'declaração sobre escravidão', 'tráfico humano']
+    },
+    sustainability: {
+      en: ['sustainability', 'environmental policy', 'carbon footprint', 'climate', 'esg', 'green policy', 'environmental statement', 'sustainability report', 'carbon neutral'],
+      es: ['sostenibilidad', 'política ambiental', 'huella de carbono', 'clima', 'informe de sostenibilidad'],
+      fr: ['durabilité', 'politique environnementale', 'empreinte carbone', 'climat', 'rapport de durabilité'],
+      de: ['nachhaltigkeit', 'umweltpolitik', 'co2-fußabdruck', 'klima', 'nachhaltigkeitsbericht'],
+      nl: ['duurzaamheid', 'milieubeleid', 'co2-voetafdruk', 'klimaat', 'duurzaamheidsrapport'],
+      pt: ['sustentabilidade', 'política ambiental', 'pegada de carbono', 'clima', 'relatório de sustentabilidade']
+    },
+    securityPolicy: {
+      en: ['security policy', 'vulnerability disclosure', 'responsible disclosure', 'bug bounty', 'security.txt', 'security', 'report vulnerability', 'security contact'],
+      es: ['política de seguridad', 'divulgación de vulnerabilidades', 'recompensa por errores'],
+      fr: ['politique de sécurité', 'divulgation de vulnérabilités', 'prime aux bugs'],
+      de: ['sicherheitsrichtlinie', 'schwachstellenoffenlegung', 'bug-bounty', 'sicherheit'],
+      nl: ['beveiligingsbeleid', 'kwetsbaarheidsmeldingen', 'bug bounty'],
+      pt: ['política de segurança', 'divulgação de vulnerabilidades', 'recompensa por bugs']
+    },
+    // ICANN & Registry Compliance
+    whoisRdap: {
+      en: ['whois', 'rdap', 'domain lookup', 'registration data', 'domain registration', 'registrant information', 'domain owner', 'registrant contact', 'registration data disclosure', 'domain data', 'registrant data'],
+      es: ['whois', 'consulta de dominio', 'datos de registro', 'registro de dominio', 'titular del dominio', 'divulgación de datos'],
+      fr: ['whois', 'recherche de domaine', 'données d\'enregistrement', 'enregistrement de domaine', 'titulaire du domaine', 'divulgation des données'],
+      de: ['whois', 'domain-abfrage', 'registrierungsdaten', 'domain-registrierung', 'domaininhaber', 'datenoffenlegung'],
+      nl: ['whois', 'domein opzoeken', 'registratiegegevens', 'domeinregistratie', 'domeineigenaar', 'gegevensopenbaarmaking'],
+      pt: ['whois', 'consulta de domínio', 'dados de registro', 'registro de domínio', 'titular do domínio', 'divulgação de dados']
+    },
+    domainAbuse: {
+      en: ['domain abuse', 'abuse contact', 'report domain abuse', 'domain complaint', 'abuse policy', 'dns abuse', 'report phishing', 'abusive domain'],
+      es: ['abuso de dominio', 'contacto de abuso', 'reportar abuso de dominio'],
+      fr: ['abus de domaine', 'contact abus', 'signaler un abus de domaine'],
+      de: ['domain-missbrauch', 'missbrauch-kontakt', 'domain-missbrauch melden'],
+      nl: ['domein misbruik', 'misbruik contact', 'domein misbruik melden'],
+      pt: ['abuso de domínio', 'contato de abuso', 'reportar abuso de domínio']
+    },
+    udrp: {
+      en: ['udrp', 'uniform domain-name dispute', 'domain dispute', 'domain name dispute resolution', 'icann dispute', 'cybersquatting', 'wipo'],
+      es: ['udrp', 'disputa de nombre de dominio', 'resolución de disputas de dominio'],
+      fr: ['udrp', 'litige de nom de domaine', 'résolution des litiges de domaine'],
+      de: ['udrp', 'domain-namensstreit', 'domain-streitbeilegung'],
+      nl: ['udrp', 'domeinnaam geschil', 'domein geschillenbeslechting'],
+      pt: ['udrp', 'disputa de nome de domínio', 'resolução de disputas de domínio']
+    },
+    registrarInfo: {
+      en: ['registrar', 'domain registrar', 'accredited registrar', 'icann accredited', 'registrar information', 'authorized registrar'],
+      es: ['registrador', 'registrador de dominios', 'registrador acreditado'],
+      fr: ['registraire', 'registraire de domaine', 'registraire accrédité'],
+      de: ['registrar', 'domain-registrar', 'akkreditierter registrar'],
+      nl: ['registrar', 'domein registrar', 'geaccrediteerde registrar'],
+      pt: ['registrador', 'registrador de domínios', 'registrador credenciado']
+    },
+    transferPolicy: {
+      en: ['transfer policy', 'domain transfer', 'transfer lock', 'transfer authorization', '60-day lock', 'registrar transfer', 'auth code', 'epp code'],
+      es: ['política de transferencia', 'transferencia de dominio', 'bloqueo de transferencia'],
+      fr: ['politique de transfert', 'transfert de domaine', 'verrouillage de transfert'],
+      de: ['transfer-richtlinie', 'domain-transfer', 'transfer-sperre'],
+      nl: ['overdrachtsbeleid', 'domein overdracht', 'overdracht vergrendeling'],
+      pt: ['política de transferência', 'transferência de domínio', 'bloqueio de transferência']
     }
   };
 
@@ -105,16 +248,41 @@
       de: ['nutzungsbedingungen', 'agb'],
       nl: ['voorwaarden'],
       pt: ['termos', 'condições']
+    },
+    whoisRdap: {
+      en: ['whois', 'rdap', 'registration data', 'domain registration'],
+      es: ['whois', 'datos de registro'],
+      fr: ['whois', 'données d\'enregistrement'],
+      de: ['whois', 'registrierungsdaten'],
+      nl: ['whois', 'registratiegegevens'],
+      pt: ['whois', 'dados de registro']
     }
   };
 
   // URL path indicators
   const URL_INDICATORS = {
     privacyPolicy: ['privacy', 'privacidad', 'privacidade', 'confidentialite', 'datenschutz', 'privatsphare', 'datos-personales', 'data-protection'],
-    cookiePolicy: ['cookie'],
+    cookiePolicy: ['cookie', 'cookies'],
     termsOfService: ['terms', 'tos', 'condiciones', 'conditions', 'termos', 'nutzungsbedingungen', 'voorwaarden'],
     legal: ['legal', 'impressum', 'mentions-legales'],
-    doNotSell: ['do-not-sell', 'ccpa', 'opt-out', 'personal-information', 'no-vender']
+    doNotSell: ['do-not-sell', 'ccpa', 'opt-out', 'personal-information', 'no-vender'],
+    dataRequest: ['data-request', 'dsar', 'data-access', 'data-portability', 'my-data'],
+    contact: ['contact', 'contacto', 'kontakt'],
+    refundPolicy: ['refund', 'return', 'returns', 'devolucion'],
+    shippingPolicy: ['shipping', 'delivery', 'envio', 'livraison'],
+    ageVerification: ['age', 'verify-age', 'adult', 'coppa'],
+    accessibility: ['accessibility', 'a11y', 'wcag', 'ada'],
+    sitemap: ['sitemap', 'site-map'],
+    affiliateDisclosure: ['affiliate', 'disclosure', 'ftc'],
+    adChoices: ['adchoices', 'ad-choices', 'ad-preferences'],
+    modernSlavery: ['slavery', 'modern-slavery', 'supply-chain'],
+    sustainability: ['sustainability', 'environment', 'esg', 'climate', 'green'],
+    securityPolicy: ['security', 'vulnerability', 'bug-bounty', 'responsible-disclosure'],
+    whoisRdap: ['whois', 'rdap', 'domain-lookup', 'registration-data', 'registrant', 'domain-registration', 'disclosure'],
+    domainAbuse: ['abuse', 'domain-abuse', 'report-abuse', 'dns-abuse'],
+    udrp: ['udrp', 'domain-dispute', 'dispute-resolution', 'wipo'],
+    registrarInfo: ['registrar', 'accredited', 'icann'],
+    transferPolicy: ['transfer', 'domain-transfer', 'transfer-policy', 'auth-code']
   };
 
   // Cookie banner patterns
@@ -341,6 +509,50 @@
     return { found: false, url: null, text: null };
   }
 
+  // CMP global objects that persist after consent
+  const CMP_GLOBALS = [
+    { name: 'OneTrust', check: () => typeof OneTrust !== 'undefined' },
+    { name: 'Cookiebot', check: () => typeof Cookiebot !== 'undefined' },
+    { name: 'Didomi', check: () => typeof Didomi !== 'undefined' },
+    { name: 'UC_UI', check: () => typeof UC_UI !== 'undefined' },
+    { name: '__tcfapi', check: () => typeof __tcfapi !== 'undefined' },
+    { name: 'Osano', check: () => typeof Osano !== 'undefined' },
+    { name: 'klaro', check: () => typeof klaro !== 'undefined' },
+    { name: 'CookieYes', check: () => typeof getCkyConsent !== 'undefined' },
+    { name: 'TrustArc', check: () => typeof truste !== 'undefined' },
+    { name: 'Iubenda', check: () => typeof _iub !== 'undefined' }
+  ];
+
+  // Consent storage keys that indicate a cookie banner was shown
+  const CONSENT_STORAGE_KEYS = [
+    'OptanonConsent',
+    'OptanonAlertBoxClosed',
+    'CookieConsent',
+    'cookieconsent_status',
+    'euconsent-v2',
+    'didomi_token',
+    'uc_user_interaction',
+    '_iub_cs',
+    'cookieyes-consent',
+    'osano_consentmanager',
+    'klaro',
+    'truste.eu.cookie.notice_preferences'
+  ];
+
+  // Consent cookie prefixes/patterns
+  const CONSENT_COOKIE_PATTERNS = [
+    'OptanonConsent',
+    'OptanonAlertBoxClosed',
+    'CookieConsent',
+    'cookieconsent_status',
+    'euconsent',
+    'didomi',
+    '_iub_cs',
+    'cookieyes',
+    'osano',
+    'truste'
+  ];
+
   // Detect cookie banner
   function detectCookieBanner() {
     const detected = {
@@ -349,11 +561,12 @@
         method: null,
         cmp: null,
         elementId: null,
-        elementClass: null
+        elementClass: null,
+        consentGiven: false
       }
     };
 
-    // Check for common IDs
+    // Check for common IDs (visible banner)
     for (const id of COOKIE_BANNER_PATTERNS.ids) {
       const elem = document.getElementById(id);
       if (elem) {
@@ -364,7 +577,7 @@
       }
     }
 
-    // Check for common classes
+    // Check for common classes (visible banner)
     for (const className of COOKIE_BANNER_PATTERNS.classes) {
       const elems = document.getElementsByClassName(className);
       if (elems.length > 0) {
@@ -391,7 +604,53 @@
       }
     }
 
-    // Check for text patterns
+    // Check for CMP global objects (persists after consent)
+    for (const cmp of CMP_GLOBALS) {
+      try {
+        if (cmp.check()) {
+          detected.detected = true;
+          detected.details.method = 'CMP Global Object';
+          detected.details.cmp = cmp.name;
+          detected.details.consentGiven = true;
+          return detected;
+        }
+      } catch (e) {
+        // Ignore errors from checking globals
+      }
+    }
+
+    // Check for consent storage (localStorage) - indicates banner was shown previously
+    for (const key of CONSENT_STORAGE_KEYS) {
+      try {
+        if (localStorage.getItem(key)) {
+          detected.detected = true;
+          detected.details.method = 'Consent Storage';
+          detected.details.storageKey = key;
+          detected.details.consentGiven = true;
+          return detected;
+        }
+      } catch (e) {
+        // localStorage might be blocked
+      }
+    }
+
+    // Check for consent cookies - indicates banner was shown previously
+    try {
+      const cookies = document.cookie;
+      for (const pattern of CONSENT_COOKIE_PATTERNS) {
+        if (cookies.includes(pattern)) {
+          detected.detected = true;
+          detected.details.method = 'Consent Cookie';
+          detected.details.cookiePattern = pattern;
+          detected.details.consentGiven = true;
+          return detected;
+        }
+      }
+    } catch (e) {
+      // Cookie access might be restricted
+    }
+
+    // Check for text patterns (visible banner)
     const bodyText = document.body?.textContent?.toLowerCase() || '';
     for (const [lang, patterns] of Object.entries(COOKIE_BANNER_PATTERNS.textPatterns)) {
       for (const pattern of patterns) {
@@ -426,12 +685,22 @@
       details: cookieBanner.details
     };
 
+    // Extract ALL document links for deep scan eligibility
+    // Any compliance item with a URL can be deep scanned
+    const documentLinks = {};
+    for (const [category, result] of Object.entries(results)) {
+      if (result && result.found && result.url) {
+        documentLinks[category] = result.url;
+      }
+    }
+
     return {
       url: window.location.href,
       title: document.title,
       language: detectedLanguage,
       scannedAt: new Date().toISOString(),
-      compliance: results
+      compliance: results,
+      documentLinks: documentLinks
     };
   }
 

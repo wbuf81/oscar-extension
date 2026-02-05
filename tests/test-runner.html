@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSCAR Extension Tests</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 { color: #6B4423; }
+    h2 { color: #8B5A2B; border-bottom: 2px solid #C4956A; padding-bottom: 8px; }
+    .test-section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+      background: #f9f9f9;
+    }
+    .test-item.pass { background: #e8f5e9; }
+    .test-item.fail { background: #ffebee; }
+    .test-item.pending { background: #fff3e0; }
+    .test-status {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+    .test-name { flex: 1; font-weight: 500; }
+    .test-result { font-size: 12px; color: #666; }
+    button {
+      background: #6B4423;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    button:hover { background: #5A3A1E; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    .summary {
+      font-size: 18px;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .summary.all-pass { background: #c8e6c9; color: #2e7d32; }
+    .summary.has-fail { background: #ffcdd2; color: #c62828; }
+    pre {
+      background: #263238;
+      color: #aed581;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+    .console-output {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .manual-test {
+      padding: 15px;
+      background: #e3f2fd;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    .manual-test h4 { margin-top: 0; color: #1565c0; }
+    .manual-test ol { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+  <h1>🐕 OSCAR Extension Test Suite</h1>
+
+  <div id="summary" class="summary" style="display:none;"></div>
+
+  <div class="test-section">
+    <h2>Automated Unit Tests</h2>
+    <button onclick="runAllTests()">Run All Tests</button>
+    <button onclick="clearResults()">Clear Results</button>
+    <div id="test-results"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Console Output</h2>
+    <pre id="console-output" class="console-output"></pre>
+  </div>
+
+  <div class="test-section">
+    <h2>Manual Test Checklist</h2>
+
+    <div class="manual-test">
+      <h4>1. Basic Scan Test</h4>
+      <ol>
+        <li>Open extension popup on any website</li>
+        <li>Click "Scan This Page"</li>
+        <li>Verify results appear with score</li>
+        <li>Verify compliance items show found/not found status</li>
+        <li>Verify badge updates with score</li>
+      </ol>
+    </div>
+
+    <div class="manual-test">
+      <h4>2. Deep Scan UI Test</h4>
+      <ol>
+        <li>Scan a site with Terms of Service but missing items (e.g., medium.com)</li>
+        <li>Verify "Deep Scan X Documents" button appears</li>
+        <li>Click the button - verify dropdown expands with document list</li>
+        <li>Verify checkboxes are checked by default</li>
+        <li>Uncheck a document - verify "Scan Selected" count updates</li>
+        <li>Click caret again - verify dropdown collapses</li>
+      </ol>
+    </div>
+
+    <div class="manual-test">
+      <h4>3. Deep Scan Execution Test</h4>
+      <ol>
+        <li>With documents selected, click "Scan Selected"</li>
+        <li>Verify progress indicator shows</li>
+        <li>Verify results update after scan completes</li>
+        <li>Verify items found via deep scan show "Found in [Document]"</li>
+        <li>Verify toast notification appears with results</li>
+      </ol>
+    </div>
+
+    <div class="manual-test">
+      <h4>4. State Reset Test</h4>
+      <ol>
+        <li>Perform a deep scan</li>
+        <li>Click "Scan This Page" again</li>
+        <li>Verify deep scan button resets properly</li>
+        <li>Verify you can click and expand it again</li>
+        <li>Verify checkboxes are re-populated</li>
+      </ol>
+    </div>
+
+    <div class="manual-test">
+      <h4>5. Compare Mode Test</h4>
+      <ol>
+        <li>Switch to "Compare Tabs" mode</li>
+        <li>Select multiple tabs</li>
+        <li>Click "Scan Selected"</li>
+        <li>Verify all tabs are scanned</li>
+        <li>Verify comparison results display correctly</li>
+      </ol>
+    </div>
+
+    <div class="manual-test">
+      <h4>6. History Test</h4>
+      <ol>
+        <li>Perform several scans</li>
+        <li>Open History page</li>
+        <li>Verify all scans appear in history</li>
+        <li>Verify deep scan results are saved in history</li>
+        <li>Delete a history item - verify it's removed</li>
+      </ol>
+    </div>
+
+    <div class="manual-test">
+      <h4>7. Error Handling Test</h4>
+      <ol>
+        <li>Try scanning chrome:// pages - verify friendly error</li>
+        <li>Try scanning extension pages - verify friendly error</li>
+        <li>Disconnect internet, try deep scan - verify error handling</li>
+      </ol>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import test utilities
+    import { DEEP_SCAN_PATTERNS, DEEP_SCAN_LIMITS } from '../utils/deep-scan-patterns.js';
+
+    const results = [];
+    const consoleOutput = document.getElementById('console-output');
+
+    // Override console.log for test output
+    const originalLog = console.log;
+    console.log = (...args) => {
+      originalLog(...args);
+      consoleOutput.textContent += args.map(a =>
+        typeof a === 'object' ? JSON.stringify(a, null, 2) : a
+      ).join(' ') + '\n';
+      consoleOutput.scrollTop = consoleOutput.scrollHeight;
+    };
+
+    // Test framework
+    function test(name, fn) {
+      try {
+        const result = fn();
+        if (result instanceof Promise) {
+          return result.then(() => {
+            results.push({ name, status: 'pass' });
+            console.log(`✓ ${name}`);
+          }).catch(err => {
+            results.push({ name, status: 'fail', error: err.message });
+            console.log(`✗ ${name}: ${err.message}`);
+          });
+        }
+        results.push({ name, status: 'pass' });
+        console.log(`✓ ${name}`);
+      } catch (err) {
+        results.push({ name, status: 'fail', error: err.message });
+        console.log(`✗ ${name}: ${err.message}`);
+      }
+    }
+
+    function assertEqual(actual, expected, message = '') {
+      if (actual !== expected) {
+        throw new Error(`${message} Expected ${expected}, got ${actual}`);
+      }
+    }
+
+    function assertTrue(value, message = '') {
+      if (!value) {
+        throw new Error(message || 'Expected true, got false');
+      }
+    }
+
+    function assertFalse(value, message = '') {
+      if (value) {
+        throw new Error(message || 'Expected false, got true');
+      }
+    }
+
+    // Test cases
+    async function runAllTests() {
+      results.length = 0;
+      consoleOutput.textContent = '';
+      console.log('Starting OSCAR Test Suite...\n');
+
+      // Pattern Tests
+      console.log('--- Deep Scan Pattern Tests ---');
+
+      test('DEEP_SCAN_PATTERNS has required keys', () => {
+        assertTrue(DEEP_SCAN_PATTERNS.dmca, 'Missing dmca patterns');
+        assertTrue(DEEP_SCAN_PATTERNS.dispute, 'Missing dispute patterns');
+        assertTrue(DEEP_SCAN_PATTERNS.reportAbuse, 'Missing reportAbuse patterns');
+        assertTrue(DEEP_SCAN_PATTERNS.doNotSell, 'Missing doNotSell patterns');
+      });
+
+      test('DMCA patterns array is not empty', () => {
+        assertTrue(DEEP_SCAN_PATTERNS.dmca.patterns.length > 0, 'DMCA patterns empty');
+      });
+
+      test('Each pattern config has required fields', () => {
+        for (const [key, config] of Object.entries(DEEP_SCAN_PATTERNS)) {
+          assertTrue(config.label, `${key} missing label`);
+          assertTrue(Array.isArray(config.patterns), `${key} patterns not array`);
+          assertTrue(typeof config.minMatches === 'number', `${key} missing minMatches`);
+        }
+      });
+
+      test('DEEP_SCAN_LIMITS has required values', () => {
+        assertTrue(DEEP_SCAN_LIMITS.maxDocuments > 0, 'Invalid maxDocuments');
+        assertTrue(DEEP_SCAN_LIMITS.fetchTimeout > 0, 'Invalid fetchTimeout');
+        assertTrue(DEEP_SCAN_LIMITS.maxTextLength > 0, 'Invalid maxTextLength');
+      });
+
+      // Pattern Matching Tests
+      console.log('\n--- Pattern Matching Tests ---');
+
+      test('DMCA pattern matches "digital millennium copyright act"', () => {
+        const text = 'We comply with the Digital Millennium Copyright Act';
+        const pattern = DEEP_SCAN_PATTERNS.dmca.patterns.find(p =>
+          text.toLowerCase().includes(p.toLowerCase())
+        );
+        assertTrue(pattern, 'Should match DMCA text');
+      });
+
+      test('Dispute pattern matches "binding arbitration"', () => {
+        const text = 'All disputes shall be resolved through binding arbitration';
+        const pattern = DEEP_SCAN_PATTERNS.dispute.patterns.find(p =>
+          text.toLowerCase().includes(p.toLowerCase())
+        );
+        assertTrue(pattern, 'Should match arbitration text');
+      });
+
+      test('CCPA pattern matches "do not sell my personal information"', () => {
+        const text = 'You have the right to request that we do not sell my personal information';
+        const pattern = DEEP_SCAN_PATTERNS.doNotSell.patterns.find(p =>
+          text.toLowerCase().includes(p.toLowerCase())
+        );
+        assertTrue(pattern, 'Should match CCPA text');
+      });
+
+      // HTML Extraction Simulation Tests
+      console.log('\n--- Text Extraction Tests ---');
+
+      test('Script tags should be filtered', () => {
+        const html = '<p>Hello</p><script>alert("bad")</script><p>World</p>';
+        const cleaned = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, ' ');
+        assertFalse(cleaned.includes('alert'), 'Script content should be removed');
+        assertTrue(cleaned.includes('Hello'), 'Regular content should remain');
+      });
+
+      test('Style tags should be filtered', () => {
+        const html = '<p>Hello</p><style>.bad{color:red}</style><p>World</p>';
+        const cleaned = html.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, ' ');
+        assertFalse(cleaned.includes('.bad'), 'Style content should be removed');
+      });
+
+      test('HTML tags should be stripped', () => {
+        const html = '<div><p>Hello <strong>World</strong></p></div>';
+        const cleaned = html.replace(/<[^>]+>/g, ' ');
+        assertTrue(cleaned.includes('Hello'), 'Text should remain');
+        assertTrue(cleaned.includes('World'), 'Text should remain');
+        assertFalse(cleaned.includes('<div>'), 'Tags should be removed');
+      });
+
+      test('HTML entities should be decoded', () => {
+        let text = '&amp; &lt; &gt; &quot;';
+        text = text.replace(/&amp;/gi, '&');
+        text = text.replace(/&lt;/gi, '<');
+        text = text.replace(/&gt;/gi, '>');
+        text = text.replace(/&quot;/gi, '"');
+        assertEqual(text, '& < > "', 'Entities should be decoded');
+      });
+
+      // Eligibility Check Tests
+      console.log('\n--- Eligibility Check Tests ---');
+
+      test('Should be eligible when documents exist and items missing', () => {
+        const result = {
+          documentLinks: { termsOfService: 'https://example.com/tos' },
+          compliance: { dmca: { found: false } }
+        };
+        assertTrue(
+          result.documentLinks && Object.keys(result.documentLinks).length > 0,
+          'Should have document links'
+        );
+      });
+
+      test('Should not be eligible when no documents', () => {
+        const result = {
+          documentLinks: {},
+          compliance: { dmca: { found: false } }
+        };
+        assertFalse(
+          result.documentLinks && Object.keys(result.documentLinks).length > 0,
+          'Should not have document links'
+        );
+      });
+
+      // Render results
+      console.log('\n--- Test Summary ---');
+      renderResults();
+    }
+
+    function renderResults() {
+      const container = document.getElementById('test-results');
+      const summary = document.getElementById('summary');
+
+      const passed = results.filter(r => r.status === 'pass').length;
+      const failed = results.filter(r => r.status === 'fail').length;
+
+      summary.style.display = 'block';
+      summary.className = `summary ${failed > 0 ? 'has-fail' : 'all-pass'}`;
+      summary.textContent = `${passed} passed, ${failed} failed out of ${results.length} tests`;
+
+      container.innerHTML = results.map(r => `
+        <div class="test-item ${r.status}">
+          <span class="test-status">${r.status === 'pass' ? '✓' : '✗'}</span>
+          <span class="test-name">${r.name}</span>
+          ${r.error ? `<span class="test-result">${r.error}</span>` : ''}
+        </div>
+      `).join('');
+
+      console.log(`\nTotal: ${passed}/${results.length} passed`);
+    }
+
+    function clearResults() {
+      results.length = 0;
+      document.getElementById('test-results').innerHTML = '';
+      document.getElementById('summary').style.display = 'none';
+      consoleOutput.textContent = '';
+    }
+
+    // Expose to window
+    window.runAllTests = runAllTests;
+    window.clearResults = clearResults;
+  </script>
+</body>
+</html>

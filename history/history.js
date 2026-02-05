@@ -13,6 +13,7 @@ const noResultsState = document.getElementById('no-results-state');
 const searchInput = document.getElementById('search-input');
 const scoreFilter = document.getElementById('score-filter');
 const clearAllBtn = document.getElementById('clear-all-history');
+const exportCsvBtn = document.getElementById('export-csv');
 const totalScansEl = document.getElementById('total-scans');
 const avgScoreEl = document.getElementById('avg-score');
 const uniqueSitesEl = document.getElementById('unique-sites');
@@ -67,6 +68,9 @@ function setupEventListeners() {
   scoreFilter.addEventListener('change', filterHistory);
   clearAllBtn.addEventListener('click', clearAllHistory);
   deleteScanBtn.addEventListener('click', deleteSelectedScan);
+  if (exportCsvBtn) {
+    exportCsvBtn.addEventListener('click', exportHistoryToCsv);
+  }
 
   // Modal close buttons
   document.querySelectorAll('.modal-close, .modal-close-btn').forEach(btn => {
@@ -786,4 +790,66 @@ function renderCompareModalContent(scans, labels) {
       <div class="legend-item"><span class="legend-dot none"></span> No sites have this</div>
     </div>
   `;
+}
+
+// ========================================
+// Export CSV
+// ========================================
+
+async function exportHistoryToCsv() {
+  if (historyData.length === 0) return;
+
+  const labels = await loadComplianceLabels();
+
+  // Gather all compliance keys across all history items
+  const allKeys = new Set();
+  historyData.forEach(item => {
+    Object.keys(item.compliance).forEach(key => allKeys.add(key));
+  });
+  const complianceKeys = Array.from(allKeys);
+
+  // CSV escape helper
+  function csvEscape(value) {
+    const str = String(value ?? '');
+    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+      return '"' + str.replace(/"/g, '""') + '"';
+    }
+    return str;
+  }
+
+  // Build header row
+  const header = ['URL', 'Hostname', 'Score', 'Score Label', 'Date',
+    ...complianceKeys.map(key => labels[key] || key)
+  ];
+
+  // Build data rows
+  const rows = historyData.map(item => {
+    const hostname = new URL(item.url).hostname;
+    const date = new Date(item.scannedAt).toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric',
+      hour: 'numeric', minute: '2-digit'
+    });
+
+    const complianceCols = complianceKeys.map(key => {
+      const val = item.compliance[key];
+      const found = typeof val === 'boolean' ? val : (val && val.found);
+      return found ? 'Yes' : 'No';
+    });
+
+    return [item.url, hostname, item.score, getScoreLabel(item.score), date, ...complianceCols];
+  });
+
+  // Assemble CSV
+  const csvContent = [header, ...rows]
+    .map(row => row.map(csvEscape).join(','))
+    .join('\n');
+
+  // Download via Blob
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `oscar-history-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
 }

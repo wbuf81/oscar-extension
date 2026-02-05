@@ -1,5 +1,7 @@
 // Background service worker for OSCAR (Obligation Scanning & Compliance Analysis Reporter)
 
+import { performDeepScan, mergeDeepScanResults } from './deep-scanner.js';
+
 // Default compliance weights (puppy settings)
 const DEFAULT_WEIGHTS = {
   privacyPolicy: 22,
@@ -129,8 +131,8 @@ async function saveScanToHistory(scanResult) {
       ...scanResult
     });
 
-    // Keep only last 50 scans
-    const trimmedHistory = history.slice(0, 50);
+    // Keep only last 200 scans
+    const trimmedHistory = history.slice(0, 200);
 
     await chrome.storage.local.set({ history: trimmedHistory });
   } catch (error) {
@@ -191,6 +193,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           sendResponse({ success: true });
           break;
         }
+        case 'deepScanTab': {
+          // Perform deep scan on document links from initial scan results
+          try {
+            const deepScanResults = await performDeepScan(request.initialResults);
+            const mergedResults = mergeDeepScanResults(request.initialResults, deepScanResults);
+
+            // Recalculate score with deep scan findings
+            mergedResults.score = await calculateComplianceScore(mergedResults.compliance);
+
+            // Save updated results to history
+            await saveScanToHistory(mergedResults);
+
+            sendResponse({ success: true, data: mergedResults });
+          } catch (error) {
+            sendResponse({ success: false, error: error.message });
+          }
+          break;
+        }
         case 'updateBadge': {
           if (request.score !== undefined) {
             const score = request.score;
@@ -214,4 +234,59 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   })();
 
   return true; // Keep message channel open for async response
+});
+
+// ========================================
+// Helper: Scan active tab and update badge
+// ========================================
+
+async function scanActiveTabAndUpdateBadge(tabId) {
+  try {
+    const result = await scanTab(tabId);
+    if (result.success) {
+      const score = result.data.score;
+      let color = '#8B3A3A';
+      if (score >= 80) color = '#5D7A5D';
+      else if (score >= 60) color = '#B8860B';
+      else if (score >= 40) color = '#C4956A';
+
+      chrome.action.setBadgeBackgroundColor({ color });
+      chrome.action.setBadgeText({ text: score.toString() });
+    }
+    return result;
+  } catch (error) {
+    console.error('scanActiveTabAndUpdateBadge failed:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// ========================================
+// Context Menu
+// ========================================
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+    id: 'scan-with-oscar',
+    title: 'Scan with OSCAR',
+    contexts: ['page']
+  });
+});
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === 'scan-with-oscar' && tab?.id) {
+    scanActiveTabAndUpdateBadge(tab.id);
+  }
+});
+
+// ========================================
+// Keyboard Shortcut
+// ========================================
+
+chrome.commands.onCommand.addListener(async (command) => {
+  if (command === 'scan-current-tab') {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tab?.id) {
+      scanActiveTabAndUpdateBadge(tab.id);
+    }
+  }
 });

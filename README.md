@@ -5,14 +5,21 @@
 ## Features
 
 - **One-Click Scan**: Instantly scan the current page for compliance elements
+- **Context Menu Scan**: Right-click any page and select "Scan with OSCAR"
+- **Keyboard Shortcut**: Press `Alt+Shift+S` to scan without opening the popup
 - **Multi-Tab Compare**: Select multiple tabs and compare their compliance side-by-side
+- **Deep Scan**: Fetch and parse linked legal documents (HTML + PDF) to find compliance mentions others miss
 - **26 Compliance Checks**: Comprehensive scanning across 8 categories
 - **Multi-Language Support**: Detects compliance links in English, Spanish, French, German, Dutch, and Portuguese
 - **Smart Detection**: Finds legal links even when hidden in footers, lazy-loaded content, or using non-standard naming
 - **Compliance Scoring**: Get a weighted score (0-100%) based on found compliance elements
 - **Customizable**: Enable/disable checks, adjust weights, add custom searches
 - **Sniff-O-Meter**: Visual dashboard showing your scan configuration
-- **Scan History**: View past scan results stored locally
+- **Copy Results**: Copy scan results to clipboard as formatted markdown
+- **Export History to CSV**: Download your full scan history as a CSV file
+- **Scan History**: View up to 200 past scan results stored locally
+- **"What's This?" Tooltips**: Hover info icons to learn what each compliance check means and which regulation requires it
+- **Force Cookie Banner**: Detect and re-trigger consent dialogs from 10+ CMP providers
 - **Privacy-First**: All scanning happens client-side—no data sent to servers
 
 ## What OSCAR Detects
@@ -94,9 +101,13 @@
 ## Usage
 
 1. **Scan Current Page**: Click the OSCAR icon, then click "Scan This Page"
-2. **Compare Tabs**: Switch to "Compare Tabs" mode, select tabs, and click "Scan Selected"
-3. **Train Oscar**: Customize which compliance elements to check and their weights
-4. **View History**: Access your scan history to track compliance across sites
+2. **Right-Click Scan**: Right-click any webpage and select "Scan with OSCAR"
+3. **Keyboard Shortcut**: Press `Alt+Shift+S` to scan instantly (customizable at `chrome://extensions/shortcuts`)
+4. **Compare Tabs**: Switch to "Compare Tabs" mode, select tabs, and click "Scan Selected"
+5. **Copy Results**: After scanning, click "Copy Results" to copy a markdown-formatted report to your clipboard
+6. **Export History**: On the History page, click "Export CSV" to download all scan data
+7. **Train Oscar**: Customize which compliance elements to check and their weights
+8. **View History**: Access your scan history to track compliance across sites
 
 ## Privacy
 
@@ -117,6 +128,7 @@ OSCAR is designed with privacy as a core principle:
 | `storage` | To save your settings and scan history locally |
 | `scripting` | To inject the scanner into web pages |
 | `cookies` | To clear consent cookies for the "Force Cookie Banner" feature |
+| `contextMenus` | To add "Scan with OSCAR" to the right-click menu |
 | `<all_urls>` | To scan any website you visit |
 
 ## Project Structure

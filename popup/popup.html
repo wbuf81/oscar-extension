@@ -69,6 +69,22 @@
         <span class="btn-icon">🍪</span>
         <span class="btn-text">Force Cookie Banner</span>
       </button>
+      <div id="deep-scan-container" class="deep-scan-container hidden">
+        <button id="deep-scan-toggle" class="btn btn-secondary btn-deep-scan-toggle">
+          <span class="btn-icon">📄</span>
+          <span class="btn-text">Deep Scan Documents</span>
+          <span class="btn-caret">▼</span>
+        </button>
+        <div id="deep-scan-options" class="deep-scan-options hidden">
+          <div class="deep-scan-docs-list" id="deep-scan-docs-list">
+            <!-- Document checkboxes will be populated here -->
+          </div>
+          <button id="deep-scan-start" class="btn btn-primary btn-small btn-deep-scan-start">
+            <span class="btn-icon">🔍</span>
+            <span class="btn-text">Scan Selected</span>
+          </button>
+        </div>
+      </div>
       <p class="scan-hint">Oscar will sniff out privacy policies, cookie banners, terms of service & more</p>
     </div>
 
@@ -101,6 +117,7 @@
 
     <!-- Footer -->
     <div class="footer">
+      <button id="copy-results" class="btn btn-link hidden">Copy Results</button>
       <button id="clear-results" class="btn btn-link hidden">Clear Results</button>
     </div>
 

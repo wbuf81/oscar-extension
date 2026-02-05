@@ -31,6 +31,13 @@
   --error: #8B3A3A;
   --error-bg: #F8E8E8;
   --error-text: #6B2A2A;
+
+  /* Type Scale - 5 sizes only */
+  --font-caption: 11px;
+  --font-body: 13px;
+  --font-subhead: 15px;
+  --font-title: 18px;
+  --font-display: 24px;
 }
 
 /* Base styles */
@@ -41,12 +48,12 @@
 }
 
 body {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: var(--font-body);
   line-height: 1.6;
   color: var(--text-primary);
   background: var(--background);
-  width: 400px;
+  width: 420px;
   min-height: 500px;
 }
 
@@ -87,7 +94,7 @@ body {
 }
 
 .header-text h1 {
-  font-size: 20px;
+  font-size: var(--font-title);
   font-weight: 700;
   color: var(--primary);
   font-family: 'Georgia', serif;
@@ -96,10 +103,9 @@ body {
 }
 
 .subtitle {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-secondary);
   letter-spacing: 0.2px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.4;
   margin-top: 4px;
 }
@@ -123,8 +129,7 @@ body {
   background: var(--card);
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 11px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: var(--font-caption);
   font-weight: 500;
   transition: all 0.15s ease;
 }
@@ -136,7 +141,7 @@ body {
 }
 
 .header-nav-btn .nav-icon {
-  font-size: 12px;
+  font-size: var(--font-caption);
 }
 
 /* Quick Stats Bar */
@@ -160,7 +165,7 @@ body {
 
 .quick-stat-value {
   display: block;
-  font-size: 18px;
+  font-size: var(--font-title);
   font-weight: 700;
   color: var(--primary);
   font-family: 'Georgia', serif;
@@ -168,11 +173,10 @@ body {
 }
 
 .quick-stat-label {
-  font-size: 10px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* Mode Tabs - Legal document tab style */
@@ -188,12 +192,11 @@ body {
   border: 1px solid var(--card-border);
   background: var(--card);
   border-radius: 6px;
-  font-size: 13px;
+  font-size: var(--font-body);
   font-weight: 500;
   color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .mode-tab:hover {
@@ -249,7 +252,7 @@ body {
 }
 
 .tab-url {
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: var(--text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -257,7 +260,7 @@ body {
   font-family: 'Monaco', 'Consolas', monospace;
 }
 
-/* Buttons - Professional legal style */
+/* Buttons - Three unified styles: Primary, Secondary, Danger */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -266,11 +269,10 @@ body {
   padding: 12px 20px;
   border: none;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: var(--font-body);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: all 0.15s ease;
 }
 
 .btn:disabled {
@@ -301,22 +303,33 @@ body {
   border-color: var(--secondary);
 }
 
+.btn-danger {
+  background: var(--error);
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #7A3030;
+  transform: translateY(-1px);
+}
+
 .btn-large {
   width: 100%;
   padding: 14px 20px;
-  font-size: 15px;
+  font-size: var(--font-subhead);
 }
 
 .btn-small {
   padding: 8px 12px;
-  font-size: 12px;
+  font-size: var(--font-caption);
 }
 
 .btn-link {
   background: none;
   color: var(--primary);
   padding: 8px;
-  font-size: 12px;
+  font-size: var(--font-caption);
 }
 
 .btn-link:hover {
@@ -325,7 +338,7 @@ body {
 }
 
 .btn-icon {
-  font-size: 16px;
+  font-size: var(--font-subhead);
 }
 
 /* Scan button special styling */
@@ -356,34 +369,10 @@ body {
   transform: scale(0.98);
 }
 
-/* Force Cookie Banner Button */
+/* Force Cookie Banner Button - Uses secondary style */
 .btn-cookie-banner {
   width: 100%;
   margin-top: 10px;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: var(--card);
-  border: 1px dashed var(--secondary);
-  color: var(--secondary);
-  transition: all 0.2s ease;
-}
-
-.btn-cookie-banner:hover {
-  background: var(--secondary);
-  color: var(--bmd-cream);
-  border-style: solid;
-}
-
-.btn-cookie-banner .btn-icon {
-  font-size: 16px;
-}
-
-.btn-cookie-banner .btn-text {
-  font-size: 13px;
-  font-weight: 500;
 }
 
 .btn-cookie-banner.loading {
@@ -412,7 +401,7 @@ body {
   color: var(--bmd-cream);
   padding: 12px 20px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: var(--font-body);
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   z-index: 1000;
@@ -439,21 +428,19 @@ body {
 
 /* Scan hint text */
 .scan-hint {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   text-align: center;
   margin-top: 12px;
   line-height: 1.4;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* Compare Mode Hint */
 .compare-hint {
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   margin-bottom: 10px;
   text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* Tabs List (Compare Mode) */
@@ -502,7 +489,7 @@ body {
 
 .tab-item .tab-title {
   flex: 1;
-  font-size: 13px;
+  font-size: var(--font-body);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -538,11 +525,11 @@ body {
   padding: 24px;
   text-align: center;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: var(--font-body);
 }
 
 .tabs-list-empty-icon {
-  font-size: 24px;
+  font-size: var(--font-display);
   margin-bottom: 8px;
 }
 
@@ -571,10 +558,9 @@ body {
 }
 
 .progress-text {
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -658,7 +644,7 @@ body {
 }
 
 .result-oscar-speech {
-  font-size: 14px;
+  font-size: var(--font-body);
   font-weight: 600;
   color: var(--primary);
   font-style: italic;
@@ -666,7 +652,7 @@ body {
 }
 
 .result-url {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -703,13 +689,13 @@ body {
 .result-score-number.score-poor { color: var(--error); }
 
 .result-score-percent {
-  font-size: 24px;
+  font-size: var(--font-display);
   font-weight: 600;
   color: var(--text-muted);
 }
 
 .result-score-label {
-  font-size: 14px;
+  font-size: var(--font-body);
   font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
@@ -776,12 +762,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: var(--font-body);
   color: var(--text-secondary);
 }
 
 .result-found-icon {
-  font-size: 16px;
+  font-size: var(--font-subhead);
 }
 
 .result-found-summary strong {
@@ -796,7 +782,7 @@ body {
 }
 
 .result-category-title {
-  font-size: 11px;
+  font-size: var(--font-caption);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -853,18 +839,18 @@ body {
 }
 
 .result-category-icon {
-  font-size: 14px;
+  font-size: var(--font-body);
 }
 
 .result-category-name {
   flex: 1;
-  font-size: 11px;
+  font-size: var(--font-caption);
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .result-category-score {
-  font-size: 11px;
+  font-size: var(--font-caption);
   font-weight: 700;
   color: var(--primary);
 }
@@ -890,7 +876,7 @@ body {
 }
 
 .result-compliance-title {
-  font-size: 11px;
+  font-size: var(--font-caption);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -917,9 +903,8 @@ body {
 .score-badge {
   padding: 4px 12px;
   border-radius: 4px;
-  font-size: 13px;
+  font-size: var(--font-body);
   font-weight: 700;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .score-excellent {
@@ -979,17 +964,16 @@ body {
 }
 
 .compliance-name {
-  font-size: 13px;
+  font-size: var(--font-body);
   font-weight: 500;
   color: var(--text-primary);
 }
 
 .compliance-status {
-  font-size: 12px;
+  font-size: var(--font-caption);
   display: flex;
   align-items: center;
   gap: 4px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .compliance-status.found {
@@ -1000,12 +984,17 @@ body {
   color: var(--text-muted);
 }
 
+.compliance-status.consent-given {
+  color: var(--success-text);
+  font-size: var(--font-caption);
+}
+
 .status-icon {
-  font-size: 14px;
+  font-size: var(--font-body);
 }
 
 .compliance-link {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--primary);
   text-decoration: none;
   display: block;
@@ -1037,7 +1026,7 @@ body {
 }
 
 .compare-results-header {
-  font-size: 13px;
+  font-size: var(--font-body);
   font-weight: 600;
   color: var(--text-secondary);
   text-align: center;
@@ -1067,14 +1056,14 @@ body {
 }
 
 .compare-oscar-speech {
-  font-size: 13px;
+  font-size: var(--font-body);
   font-weight: 600;
   color: var(--primary);
   font-style: italic;
 }
 
 .compare-sites-count {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   margin-top: 2px;
 }
@@ -1095,7 +1084,7 @@ body {
 }
 
 .compare-stat-value {
-  font-size: 20px;
+  font-size: var(--font-title);
   font-weight: 700;
   color: var(--primary);
   font-family: 'Georgia', serif;
@@ -1110,7 +1099,7 @@ body {
 }
 
 .compare-stat-label {
-  font-size: 10px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -1165,7 +1154,7 @@ body {
 }
 
 .compare-card-site {
-  font-size: 12px;
+  font-size: var(--font-caption);
   font-weight: 600;
   color: var(--text-primary);
   overflow: hidden;
@@ -1175,7 +1164,7 @@ body {
 }
 
 .compare-found-mini {
-  font-size: 10px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
 }
 
@@ -1193,7 +1182,7 @@ body {
 .compare-score-mini.score-poor { background: var(--error-bg); }
 
 .compare-score-value {
-  font-size: 18px;
+  font-size: var(--font-title);
   font-weight: 700;
   font-family: 'Georgia', serif;
 }
@@ -1204,7 +1193,7 @@ body {
 .compare-score-mini.score-poor .compare-score-value { color: var(--error); }
 
 .compare-score-percent {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   font-weight: 600;
 }
@@ -1249,7 +1238,7 @@ body {
 }
 
 .compare-mini-icon {
-  font-size: 12px;
+  font-size: var(--font-caption);
 }
 
 .compare-mini-bar {
@@ -1279,7 +1268,7 @@ body {
 }
 
 .compare-view-history {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--primary);
   font-weight: 500;
   cursor: pointer;
@@ -1307,7 +1296,7 @@ body {
   padding: 6px 8px;
   background: var(--background);
   border-radius: 4px;
-  font-size: 11px;
+  font-size: var(--font-caption);
 }
 
 .compare-compliance-item.found {
@@ -1315,7 +1304,7 @@ body {
 }
 
 .compare-compliance-item .status-icon {
-  font-size: 12px;
+  font-size: var(--font-caption);
   flex-shrink: 0;
 }
 
@@ -1350,14 +1339,14 @@ body {
 }
 
 .compare-summary-label {
-  font-size: 10px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .compare-summary-value {
-  font-size: 14px;
+  font-size: var(--font-body);
   font-weight: 700;
   color: var(--primary);
 }
@@ -1366,7 +1355,7 @@ body {
 .compare-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: var(--font-caption);
 }
 
 .compare-table th,
@@ -1433,7 +1422,7 @@ body {
 }
 
 .history-url {
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: var(--text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1441,7 +1430,7 @@ body {
 }
 
 .history-date {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
 }
 
@@ -1457,12 +1446,12 @@ body {
 }
 
 .empty-state-icon {
-  font-size: 32px;
+  font-size: var(--font-display);
   margin-bottom: 8px;
 }
 
 .empty-state-text {
-  font-size: 13px;
+  font-size: var(--font-body);
 }
 
 /* Error Card - Dog Themed */
@@ -1490,7 +1479,7 @@ body {
 }
 
 .error-title {
-  font-size: 16px;
+  font-size: var(--font-subhead);
   font-weight: 700;
   color: var(--error);
   margin-bottom: 8px;
@@ -1498,7 +1487,7 @@ body {
 }
 
 .error-message {
-  font-size: 13px;
+  font-size: var(--font-body);
   color: var(--text-secondary);
   line-height: 1.5;
   margin-bottom: 12px;
@@ -1506,7 +1495,7 @@ body {
 }
 
 .error-hint {
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: var(--primary);
   font-weight: 500;
   padding: 8px 12px;
@@ -1524,7 +1513,7 @@ body {
 }
 
 .site-footer p {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   margin: 0;
 }
@@ -1593,7 +1582,7 @@ body {
 }
 
 .training-header h2 {
-  font-size: 18px;
+  font-size: var(--font-title);
   font-weight: 600;
   color: var(--primary);
   font-family: 'Georgia', serif;
@@ -1604,11 +1593,10 @@ body {
   background: none;
   border: none;
   color: var(--primary);
-  font-size: 14px;
+  font-size: var(--font-body);
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 4px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .btn-back:hover {
@@ -1620,7 +1608,7 @@ body {
 }
 
 .training-intro {
-  font-size: 13px;
+  font-size: var(--font-body);
   color: var(--text-secondary);
   margin-bottom: 20px;
   line-height: 1.5;
@@ -1631,7 +1619,7 @@ body {
 }
 
 .training-section-title {
-  font-size: 14px;
+  font-size: var(--font-body);
   font-weight: 600;
   color: var(--primary);
   margin-bottom: 12px;
@@ -1641,7 +1629,7 @@ body {
 }
 
 .training-hint {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   margin-bottom: 12px;
 }
@@ -1689,13 +1677,13 @@ body {
 }
 
 .training-item-name {
-  font-size: 13px;
+  font-size: var(--font-body);
   font-weight: 500;
   color: var(--text-primary);
 }
 
 .training-item-keywords {
-  font-size: 10px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1714,7 +1702,7 @@ body {
   padding: 4px 6px;
   border: 1px solid var(--card-border);
   border-radius: 4px;
-  font-size: 12px;
+  font-size: var(--font-caption);
   text-align: center;
   background: var(--background);
   color: var(--text-primary);
@@ -1726,7 +1714,7 @@ body {
 }
 
 .weight-label {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
 }
 
@@ -1734,7 +1722,7 @@ body {
   background: none;
   border: none;
   color: var(--error);
-  font-size: 16px;
+  font-size: var(--font-subhead);
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
@@ -1768,11 +1756,10 @@ body {
   padding: 10px 12px;
   border: 1px solid var(--card-border);
   border-radius: 4px;
-  font-size: 13px;
+  font-size: var(--font-body);
   margin-bottom: 8px;
   background: var(--background);
   color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .custom-input:focus {
@@ -1807,7 +1794,7 @@ body {
 }
 
 .reset-hint {
-  font-size: 11px;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   margin-top: 4px;
 }
@@ -1816,5 +1803,302 @@ body {
 body {
   position: relative;
   overflow: hidden;
+}
+
+/* ========================================
+   Deep Scan Styles
+   ======================================== */
+
+/* Deep Scan Container */
+.deep-scan-container {
+  margin-top: 10px;
+}
+
+.deep-scan-container.hidden {
+  display: none;
+}
+
+/* Deep Scan Toggle Button - Uses secondary style */
+.btn-deep-scan-toggle {
+  width: 100%;
+}
+
+.btn-deep-scan-toggle .btn-text {
+  flex: 1;
+  text-align: left;
+}
+
+.btn-deep-scan-toggle .btn-caret {
+  font-size: var(--font-caption);
+  transition: transform 0.2s ease;
+}
+
+/* Deep Scan Options Panel */
+.deep-scan-options {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 10px;
+  animation: slideDown 0.2s ease;
+}
+
+.deep-scan-options.hidden {
+  display: none;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Document List */
+.deep-scan-docs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.deep-scan-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--background);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.deep-scan-doc-item:hover {
+  background: var(--accent);
+}
+
+.deep-scan-doc-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.deep-scan-doc-icon {
+  font-size: var(--font-body);
+}
+
+.deep-scan-doc-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.deep-scan-doc-label {
+  font-size: var(--font-caption);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.deep-scan-doc-url {
+  font-size: var(--font-caption);
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+/* Deep Scan Start Button */
+.btn-deep-scan-start {
+  width: 100%;
+}
+
+.btn-deep-scan-start.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.btn-deep-scan-start.loading .btn-text::after {
+  content: '...';
+  animation: dots 1.5s infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Deep Scan Summary Section */
+.deep-scan-summary {
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #E8F0E8 0%, var(--card) 100%);
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.deep-scan-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.deep-scan-icon {
+  font-size: var(--font-subhead);
+}
+
+.deep-scan-title {
+  font-size: var(--font-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--success-text);
+}
+
+.deep-scan-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.deep-scan-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-caption);
+}
+
+.deep-scan-stat-label {
+  color: var(--text-muted);
+}
+
+.deep-scan-stat-value {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.deep-scan-stat-value.success {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.deep-scan-errors {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-caption);
+  color: var(--warning-text);
+  margin-top: 4px;
+  padding: 6px 8px;
+  background: var(--warning-bg);
+  border-radius: 4px;
+}
+
+.deep-scan-error-icon {
+  font-size: var(--font-caption);
+}
+
+/* Compliance Item - Deep Scan Found Badge */
+.compliance-item.deep-scan-found {
+  background: linear-gradient(90deg, var(--success-bg) 0%, #E8F4E8 100%);
+  border-left-color: var(--success);
+}
+
+.compliance-status.deep-scan {
+  color: var(--success-text);
+  font-size: var(--font-caption);
+  background: rgba(93, 122, 93, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.compliance-status.deep-scan .status-icon {
+  font-size: var(--font-caption);
+  margin-right: 2px;
+}
+
+/* ========================================
+   "What's This?" Info Tooltips
+   ======================================== */
+
+.compliance-info-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.compliance-info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--secondary);
+  color: var(--card);
+  font-size: 10px;
+  font-weight: 700;
+  font-style: italic;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.compliance-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  padding: 8px 10px;
+  background: var(--bmd-black);
+  color: var(--bmd-cream);
+  font-size: var(--font-caption);
+  line-height: 1.4;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.compliance-tooltip em {
+  color: var(--secondary-light);
+  font-size: 10px;
+}
+
+.compliance-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--bmd-black);
+}
+
+.compliance-info-trigger:hover .compliance-tooltip,
+.compliance-info-trigger:focus .compliance-tooltip {
+  display: block;
+}
+
+/* Flip tooltip below for first item to prevent top clipping */
+.compliance-item:first-child .compliance-tooltip {
+  bottom: auto;
+  top: calc(100% + 6px);
+}
+
+.compliance-item:first-child .compliance-tooltip::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--bmd-black);
 }
 
