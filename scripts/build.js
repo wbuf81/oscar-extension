@@ -23,7 +23,8 @@ const INCLUDE = [
   'background/',
   'content/',
   'utils/',
-  'icons/'
+  'icons/',
+  'lib/'
 ];
 
 // Files to exclude (even if in included directories)

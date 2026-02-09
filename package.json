@@ -1,6 +1,6 @@
 {
   "name": "oscar-extension",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "OSCAR - Website Compliance Scanner. Scan websites for privacy policies, cookie banners, terms of service, and 26 other compliance elements.",
   "main": "background/service-worker.js",
   "scripts": {

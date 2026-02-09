@@ -61,7 +61,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["lib/pdf.min.mjs", "lib/pdf.worker.min.mjs", "tests/*"],
+      "resources": ["lib/pdf.min.mjs", "lib/pdf.worker.min.mjs"],
       "matches": ["<all_urls>"]
     }
   ]

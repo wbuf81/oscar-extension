@@ -187,6 +187,11 @@ Required for the "Compare Tabs" feature which allows users to select and scan mu
 Required to save user preferences (enabled checks, custom weights, custom search terms) and scan history locally in the browser. No data is synced externally.
 ```
 
+**contextMenus**
+```
+Required for the "Scan with OSCAR" right-click context menu option. This allows users to right-click on any page and trigger a compliance scan directly from the browser context menu, without needing to open the extension popup.
+```
+
 **scripting**
 ```
 Required to inject the compliance scanning content script into web pages. The script analyzes the page DOM to find compliance-related links and elements.
